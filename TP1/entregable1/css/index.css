@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.container { 
+    width: 100vw;
+    height: 100vh;
+    border: 3px solid black;
+    box-sizing: border-box;
+}
+
+#canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#canvas {
+    margin-top: 3em;
+    width: 90%;
+    height: 80vh;
+    border: 1px solid black;
+}
