@@ -13,11 +13,33 @@
             <div id="logo-container">
                 Logo Container
             </div>
-            <div id="edition-tools-container">
-                Edition Tools
+            <div id="edition-tools-container">  
+                <div id="pencil-control">
+                    <div class="icon-container">
+                        <button type="button" id="pencil">Lapiz</button>
+                    </div>
+                    <div class="config-icon-container">
+                        <button type="button" id="pencil-config">C</button>
+                    </div>
+                    <div id="pencil-config-container" class="hide"></div>
+                </div>
+                <div id="eraser-control">
+                    <div class="icon-container">
+                        <button type="button" id="eraser">Goma</button>
+                    </div>
+                    <div class="config-icon-container">
+                        <button type="button" id="eraser-config">C</button>
+                    </div>
+                    <div id="eraser-config-container" class="hide"></div>
+                </div>
             </div>
             <div id="filters-container">
-                Filters
+                <div class="icon-container">Negativo</div>
+                <div class="icon-container">Brillo</div>
+                <div class="icon-container">Binariacion</div>
+                <div class="icon-container">Sepia</div>
+                <div class="icon-container">Saturación</div>
+                <div class="icon-container">Deteccion de bordes</div>
             </div>
         </div>
         <div class="grid-item">
@@ -27,9 +49,13 @@
         </div>
         <div class="grid-item">
             <div id="data-tools-container">
-                Data tools
+                <div class="icon-container">Cargar Imagen</div>
+                <div class="icon-container">Guardar Imagen</div>
+                <div class="icon-container">Nueva Imagen</div>
             </div>
         </div>  
     </div>
+    <script src="js/shapes.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
