@@ -1,8 +1,6 @@
 class Shape { 
-    constructor(ctx, x, y, color) { 
+    constructor(ctx, color) { 
         this.context = ctx
-        this.posX = x
-        this.posY = y
         this.color = color
     }
 
@@ -13,15 +11,14 @@ class Shape {
 
 class Rectangle extends Shape {
 
-    constructor(ctx, x, y, w, h, color) {
-        super(ctx, x, y, color)
+    constructor(ctx, w, h, color) {
+        super(ctx, color)
         this.width = w
         this.height = h
     }
 
-    draw = () => {
+    draw = (x, y) => {
         this.context.fillStyle = this.color
-        this.context.fillRect(this.posX, this.posY, this.width, this.height)
+        this.context.fillRect(x, y, this.width, this.height)
     }
-
 }

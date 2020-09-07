@@ -3,48 +3,66 @@
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
-
 // Utils
 
-const toggleHide = (element) => {
-    if(element.classList.contains("hide")) {
-        element.classList.remove("hide") 
+const toggleClass = (element, className) => {
+    if(element.classList.contains(className)) {
+        element.classList.remove(className) 
     }
     else {
-        element.classList.add("hide") 
+        element.classList.add(className) 
     }
 }
 
-// Pencil events 
+// Pencil 
 
 const pencil = document.getElementById('pencil')
 pencil.addEventListener('click', () => {
-    
+    toggleClass(canvas, 'pencil-cursor')
+    canvas.classList.remove('eraser-cursor')
+    canvas.removeEventListener('mousedown', activateEraser)
 })
+
+
 
 const pencilConfigContainer = document.getElementById('pencil-config-container')
 const pencilConfig = document.getElementById('pencil-config')
 
 const openPencilConfig = () => { 
-    toggleHide(pencilConfigContainer)
+    toggleClass(pencilConfigContainer, 'hide')
 }
 
 pencilConfig.addEventListener('click', (e) => {
     openPencilConfig(e)
 })
 
-// Eraser events
+// Eraser 
+const eraser = new Rectangle(ctx, 10, 10, 'red')
+const eraserButton = document.getElementById('eraser')
 
-const eraser = document.getElementById('eraser')
-eraser.addEventListener('click', () => {
-    alert("eraser touched")
+eraserButton.addEventListener('click', () => {
+    toggleClass(canvas, 'eraser-cursor')
+    canvas.classList.remove('pencil-cursor')
+    canvas.addEventListener('mousedown', activateEraser)
 })
+
+const activateEraser = (e) => {
+    eraser.draw(e.layerX, e.layerY)
+    canvas.addEventListener('mousemove', erase)
+    canvas.addEventListener('mouseup', () => {
+        canvas.removeEventListener('mousemove', erase)
+    })
+}
+
+const erase = (e) => {
+    eraser.draw(e.layerX, e.layerY)
+}
 
 const eraserConfigContainer = document.getElementById('eraser-config-container')
 const eraserConfig = document.getElementById('eraser-config')
 
 const openEraserConfig = () => { 
-    toggleHide(eraserConfigContainer)
+    toggleClass(eraserConfigContainer, 'hide')
 }
 
 eraserConfig.addEventListener('click', (e) => {

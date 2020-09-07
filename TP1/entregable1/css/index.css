@@ -51,6 +51,14 @@
     z-index: 100;
 }
 
+.pencil-cursor {
+    cursor: url('../assets/cursors/pencil-cursor.png'), auto;
+}
+
+.eraser-cursor {
+    cursor: url('../assets/cursors/eraser-cursor.png'), auto;
+}
+
 #eraser-control {
     width: 100%;
     height: 50%;
@@ -99,8 +107,6 @@
 }
 
 #canvas {
-    width: 90%;
-    height: 80vh;
     border: 1px solid black;
     box-sizing: border-box;
 }
