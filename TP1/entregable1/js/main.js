@@ -2,6 +2,10 @@
 
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
+const defaultW = canvas.width
+const defaultH = canvas.height
+let image
+let imageCoords = {}
 
 // Utils
 
@@ -98,44 +102,139 @@ eraserConfig.addEventListener('click', (e) => {
 
 ////////////////// Filters //////////////////////
 
-// Black & white
-const blackAndWhiteButton = document.getElementById('black-and-white')
-blackAndWhiteButton.addEventListener('click', () => {
-    alert("black and white")
-})
-
-// Bright
-const brightButton = document.getElementById('bright')
-brightButton.addEventListener('click', () => {
-    alert("bright")
-})
+// Utils
+const getRed = (imageData, x, y) => {
+    index = (x + y * imageData.width) * 4
+    return imageData.data[index + 0]
+}
+  
+const getGreen = (imageData, x, y) => {
+    index = (x + y * imageData.width) * 4
+    return imageData.data[index + 1]
+}
+  
+const getBlue = (imageData, x, y) => {
+    index = (x + y * imageData.width) * 4
+    return imageData.data[index + 2]
+}
+  
+const setPixel = (imageData, x, y, r, g, b) => {
+    index = (x + y * imageData.width) * 4
+    imageData.data[index + 0] = r
+    imageData.data[index + 1] = g
+    imageData.data[index + 2] = b
+}
 
 // Binarization
+
+const negativeButton = document.getElementById('negative')
+
+const negative = () => {
+    if(!image) return
+    imageData = ctx.getImageData(0, 0, image.width, image.height);
+    let r, g, b
+    for (let x = 0; x < imageData.width; x++) {
+      for (let y = 0; y < imageData.height; y++) {
+          r = getRed(imageData, x, y)
+          g = getGreen(imageData, x, y)
+          b = getBlue(imageData, x, y)
+          setPixel(imageData, x, y, 255 - r, 255 - g, 255 - b)
+      }
+    }
+    ctx.putImageData(imageData, 0, 0)
+}
+
+negativeButton.addEventListener('click', negative)
+
+// Bright
+
+const brightButton = document.getElementById('bright')
+
+const bright = () => {
+    if(!image) return
+    imageData = ctx.getImageData(0, 0, image.width, image.height)
+    let r, g, b
+    const bright = 20
+    for (let x = 0; x < image.width; x++) {
+      for (let y = 0; y < image.height; y++) {
+          r = getRed(imageData, x, y);
+          g = getGreen(imageData, x, y);
+          b = getBlue(imageData, x, y);
+          setPixel(imageData, x, y, r + bright, g + bright, b + bright)
+      }
+    }
+    ctx.putImageData(imageData, 0, 0)
+}
+
+brightButton.addEventListener('click', bright)
+
+// Binarization
+
 const binarizationButton = document.getElementById('binarization')
-binarizationButton.addEventListener('click', () => {
-    alert("binarization")
-})
+
+const binarization = () => {
+    if(!image) return
+    imageData = ctx.getImageData(0, 0, image.width, image.height);
+    let r, g, b
+    for (let x = 0; x < imageData.width; x++) {
+        for (let y = 0; y < imageData.height; y++) {
+            r = getRed(imageData, x, y)
+            g = getGreen(imageData, x, y)
+            b = getBlue(imageData, x, y)
+            let rgb = (r + g + b)/3
+            if (rgb <= 127) {
+                setPixel(imageData, x, y, 0, 0, 0)
+            }
+            else setPixel(imageData, x, y, 255, 255, 255)
+        }
+    }
+    ctx.putImageData(imageData, 0, 0)
+}
+
+binarizationButton.addEventListener('click', binarization)
 
 // Sepia
+
 const sepiaButton = document.getElementById('sepia')
-sepiaButton.addEventListener('click', () => {
-    alert("Sepia")
-})
+
+const sepia = () => {
+    if(!image) return
+    imageData = ctx.getImageData(0, 0, image.width, image.height);
+    let r, g, b
+    for (let x = 0; x < imageData.width; x++) {
+        for (let y = 0; y < imageData.height; y++) {
+            r = getRed(imageData, x, y);
+            g = getGreen(imageData, x, y);
+            b = getBlue(imageData, x, y);
+            setPixel(imageData, x, y, 
+            (r * .393 + g * .769 + b * .189),
+            (r * .349) + (g * .686) + (b * .168),
+            (r * .272) + (g * .534) + (b * .131))
+        }
+    }
+    ctx.putImageData(imageData, 0, 0);
+}
+
+sepiaButton.addEventListener('click', sepia)
 
 // Saturation
 const saturationButton = document.getElementById('saturation')
-saturationButton.addEventListener('click', () => {
-    alert("Saturacion")
-})
+
+const saturation = () => {
+    alert('saturacion')
+}
+
+saturationButton.addEventListener('click', saturation)
+
 
 // Border detection
 const borderDetectionButton = document.getElementById('border-detection')
-borderDetectionButton.addEventListener('click', () => {
-    alert("Deteccion de bordes")
-})
 
+const borderDetection = () => {
+    alert('border det')
+}
 
-
+borderDetectionButton.addEventListener('click', borderDetection)
 
 ////////////////// Image Data //////////////////////
 
@@ -143,61 +242,62 @@ borderDetectionButton.addEventListener('click', () => {
 
 let loadImageInput = document.getElementById('load-image'); 
 
-ctx.fillStyle = "white";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-
 loadImageInput.onchange = e => {
-
-    let file = e.target.files[0];
-    let reader = new FileReader();
+    let file = e.target.files[0]
+    let reader = new FileReader()
     reader.readAsDataURL(file); 
 
     reader.onload = readerEvent => {
         let content = readerEvent.target.result; 
-        let image = new Image();
-        image.src = content;
-
+        image = new Image()
+        image.src = content
         image.onload = function () {
-
-            let [posx, posY, imageScaledWidth, imageScaledHeight] = adaptImage(this)
-
-            // draw image on canvas
-            ctx.drawImage(this, posx, posY, imageScaledWidth, imageScaledHeight);
-
-            // get imageData from content of canvas
-            //let imageData = ctx.getImageData(0, 0, imageScaledWidth, imageScaledHeight);
-            
-            // draw the modified image
-            //ctx.putImageData(imageData, 0, 0);
+            let [imageScaledWidth, imageScaledHeight] = getScales(this)
+            ctx.drawImage(this, 0, 0, imageScaledWidth, imageScaledHeight)
+            loadImageInput.value = ''
         }
     }
 }
 
-const adaptImage = (image) => {
+const getScales = (image) => {
     let w = image.width
     let h = image.height
     let imageAspectRatio
-    if(w < canvas.width && h < canvas.height) {
-        return [canvas.width/2 - w/2, canvas.height/2 - h/2, w, h]
-    } 
-
-    if( w > canvas.width) {
-        imageAspectRatio = (1.0 * h) / w;
-        return [0,0, canvas.width, canvas.width * imageAspectRatio];
+    if(w <= defaultW && h <= defaultW) {
+        canvas.width = w
+        canvas.height = h
+        return [w, h]
     }
-
+    canvas.width = 1200
+    canvas.height = 600
+    if( w > canvas.width) {
+        imageAspectRatio = (1.0 * h) / w
+        return [canvas.width, canvas.width * imageAspectRatio]
+    }
 }
 
 // Save
+
+const saveButton = document.getElementById('save-image')
+const download = document.getElementById('download-image')
+saveButton.addEventListener("click", () => {
+    let dataURL = canvas.toDataURL("image/jpg");
+    download.href = dataURL
+})
 
 
 // clear 
 
 const clearButton = document.getElementById('clear')
-clearButton.addEventListener('click', () => {
-    ctx.fillStyle = "white";
+
+const resetCanvas = () => {
+    canvas.width = defaultW
+    canvas.height = defaultH
+    ctx.fillStyle = "black"
     ctx.fillRect(0, 0, canvas.width, canvas.height)
-})
+}
+
+clearButton.addEventListener('click', resetCanvas)
 
 
 
