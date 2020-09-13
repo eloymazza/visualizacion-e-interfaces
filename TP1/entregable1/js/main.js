@@ -5,7 +5,6 @@ const ctx = canvas.getContext('2d')
 const defaultW = canvas.width
 const defaultH = canvas.height
 let image
-let imageCoords = {}
 
 // Utils
 
@@ -104,34 +103,72 @@ eraserConfig.addEventListener('click', (e) => {
 
 // Utils
 const getRed = (imageData, x, y) => {
-    index = (x + y * imageData.width) * 4
+    let index = (x + y * imageData.width) * 4
     return imageData.data[index + 0]
 }
   
 const getGreen = (imageData, x, y) => {
-    index = (x + y * imageData.width) * 4
+    let index = (x + y * imageData.width) * 4
     return imageData.data[index + 1]
 }
   
 const getBlue = (imageData, x, y) => {
-    index = (x + y * imageData.width) * 4
+    let index = (x + y * imageData.width) * 4
     return imageData.data[index + 2]
 }
   
 const setPixel = (imageData, x, y, r, g, b) => {
-    index = (x + y * imageData.width) * 4
+    let index = (x + y * imageData.width) * 4
     imageData.data[index + 0] = r
     imageData.data[index + 1] = g
     imageData.data[index + 2] = b
 }
 
-// Binarization
+const getAverageRGB = (imageData, x, y) => {
+    let avgR = 0
+    let avgG = 0
+    let avgB = 0
+    for (let h = x - 1; h < x + 2; h++) {
+        for (let v = y - 1; v < y + 2; v++) {
+            if(!(h == x && v == y)) {
+                avgR += getRed(imageData, h, v)
+                avgG += getGreen(imageData, h, v)
+                avgB += getBlue(imageData, h, v)
+            }
+        }
+    }
+    avgR /= 8
+    avgG /= 8
+    avgB /= 8
+    return [avgR, avgG, avgB]
+}
 
+const isBorder = (imageData, x, y) => {
+
+    let lRed = getRed(imageData, x - 1, y)
+    let lGreen = getGreen(imageData, x - 1, y)
+    let lBlue = getBlue(imageData, x - 1, y)
+    let tRed = getRed(imageData, x, y - 1)
+    let tGreen = getGreen(imageData, x, - 1)
+    let tBlue = getBlue(imageData, x, y - 1)
+    let cRed = getRed(imageData, x, y)
+    let cGreen = getGreen(imageData, x, y)
+    let cBlue = getBlue(imageData, x, y)
+
+    return isDifferent(lRed, cRed) || isDifferent(lGreen, cGreen) || isDifferent(lBlue, cBlue) || 
+           isDifferent(tRed, cRed) || isDifferent(tGreen, cGreen) || isDifferent(tBlue, cBlue) 
+}
+
+const isDifferent = (leftColor, centerColor) => {
+    return Math.abs(leftColor - centerColor) > 50
+}
+
+// Negative
 const negativeButton = document.getElementById('negative')
 
 const negative = () => {
     if(!image) return
-    imageData = ctx.getImageData(0, 0, image.width, image.height);
+    let imageData = ctx.getImageData(0, 0, image.width, image.height)
     let r, g, b
     for (let x = 0; x < imageData.width; x++) {
       for (let y = 0; y < imageData.height; y++) {
@@ -152,7 +189,7 @@ const brightButton = document.getElementById('bright')
 
 const bright = () => {
     if(!image) return
-    imageData = ctx.getImageData(0, 0, image.width, image.height)
+    let imageData = ctx.getImageData(0, 0, image.width, image.height)
     let r, g, b
     const bright = 20
     for (let x = 0; x < image.width; x++) {
@@ -174,7 +211,7 @@ const binarizationButton = document.getElementById('binarization')
 
 const binarization = () => {
     if(!image) return
-    imageData = ctx.getImageData(0, 0, image.width, image.height);
+    let imageData = ctx.getImageData(0, 0, image.width, image.height);
     let r, g, b
     for (let x = 0; x < imageData.width; x++) {
         for (let y = 0; y < imageData.height; y++) {
@@ -199,13 +236,13 @@ const sepiaButton = document.getElementById('sepia')
 
 const sepia = () => {
     if(!image) return
-    imageData = ctx.getImageData(0, 0, image.width, image.height);
+    let imageData = ctx.getImageData(0, 0, image.width, image.height);
     let r, g, b
     for (let x = 0; x < imageData.width; x++) {
         for (let y = 0; y < imageData.height; y++) {
-            r = getRed(imageData, x, y);
-            g = getGreen(imageData, x, y);
-            b = getBlue(imageData, x, y);
+            r = getRed(imageData, x, y)
+            g = getGreen(imageData, x, y)
+            b = getBlue(imageData, x, y)
             setPixel(imageData, x, y, 
             (r * .393 + g * .769 + b * .189),
             (r * .349) + (g * .686) + (b * .168),
@@ -217,24 +254,42 @@ const sepia = () => {
 
 sepiaButton.addEventListener('click', sepia)
 
-// Saturation
-const saturationButton = document.getElementById('saturation')
-
-const saturation = () => {
-    alert('saturacion')
-}
-
-saturationButton.addEventListener('click', saturation)
-
-
-// Border detection
+// Border Detection
 const borderDetectionButton = document.getElementById('border-detection')
 
 const borderDetection = () => {
-    alert('border det')
+    if(!image) return
+    let imageData = ctx.getImageData(0, 0, image.width, image.height)
+    let newImage = ctx.getImageData(0, 0, image.width, image.height)
+    for (let x = 1; x < image.width - 1; x++) {
+        for (let y = 1; y < image.height - 1; y++) { 
+            if(isBorder(imageData, x, y))
+                setPixel(newImage, x, y, 0, 0, 0)
+        }
+    }
+    ctx.putImageData(newImage, 0, 0)
 }
 
 borderDetectionButton.addEventListener('click', borderDetection)
+
+// Blur
+const blurButton = document.getElementById('blur')
+
+const blur = () => {
+    if(!image) return
+    let imageData = ctx.getImageData(0, 0, image.width, image.height)
+    let newImage = ctx.getImageData(0, 0, image.width, image.height)
+    let r, g, b
+    for (let x = 1; x < image.width - 1; x++) {
+        for (let y = 1; y < image.height - 1; y++) { 
+            [r, g, b] = getAverageRGB(imageData, x, y)
+            setPixel(newImage, x, y, r, g, b)
+        }
+    }
+    ctx.putImageData(newImage, 0, 0)
+}
+
+blurButton.addEventListener('click', blur)
 
 ////////////////// Image Data //////////////////////
 
@@ -246,7 +301,6 @@ loadImageInput.onchange = e => {
     let file = e.target.files[0]
     let reader = new FileReader()
     reader.readAsDataURL(file); 
-
     reader.onload = readerEvent => {
         let content = readerEvent.target.result; 
         image = new Image()
@@ -254,12 +308,15 @@ loadImageInput.onchange = e => {
         image.onload = function () {
             let [imageScaledWidth, imageScaledHeight] = getScales(this)
             ctx.drawImage(this, 0, 0, imageScaledWidth, imageScaledHeight)
+            image.width = imageScaledWidth
+            image.height = imageScaledHeight
             loadImageInput.value = ''
         }
     }
 }
 
 const getScales = (image) => {
+    
     let w = image.width
     let h = image.height
     let imageAspectRatio
@@ -269,22 +326,19 @@ const getScales = (image) => {
         return [w, h]
     }
     canvas.width = 1200
-    canvas.height = 600
-    if( w > canvas.width) {
-        imageAspectRatio = (1.0 * h) / w
-        return [canvas.width, canvas.width * imageAspectRatio]
+    canvas.height = 600 
+    if(w > canvas.width && h > canvas.height) {
+        return [canvas.width, canvas.height]
     }
 }
 
 // Save
-
 const saveButton = document.getElementById('save-image')
 const download = document.getElementById('download-image')
 saveButton.addEventListener("click", () => {
     let dataURL = canvas.toDataURL("image/jpg");
     download.href = dataURL
 })
-
 
 // clear 
 
@@ -298,7 +352,3 @@ const resetCanvas = () => {
 }
 
 clearButton.addEventListener('click', resetCanvas)
-
-
-
-
