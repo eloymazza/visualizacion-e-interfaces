@@ -114,3 +114,17 @@
 .hide {
     display: none;
 }
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* Colors */ 
+
+.bg-primary { 
+    background-color: rgb(85, 85, 85);
+}
+

@@ -319,7 +319,7 @@ const getScales = (image) => {
     
     let w = image.width
     let h = image.height
-    let imageAspectRatio
+    // case image width and height fit canvas
     if(w <= defaultW && h <= defaultW) {
         canvas.width = w
         canvas.height = h
@@ -327,8 +327,17 @@ const getScales = (image) => {
     }
     canvas.width = 1200
     canvas.height = 600 
+    // case image width and height does not fit canvas
     if(w > canvas.width && h > canvas.height) {
         return [canvas.width, canvas.height]
+    }
+    // case only image width fit canvas
+    if(w < canvas.width && h > canvas.height ) {
+        return [w, canvas.height]
+    }
+    // case only image height fit canvas
+    if(h < canvas.height && w > canvas.width) {
+        return [canvas.width, h]
     }
 }
 
@@ -347,7 +356,7 @@ const clearButton = document.getElementById('clear')
 const resetCanvas = () => {
     canvas.width = defaultW
     canvas.height = defaultH
-    ctx.fillStyle = "black"
+    ctx.fillStyle = "white"
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 }
 

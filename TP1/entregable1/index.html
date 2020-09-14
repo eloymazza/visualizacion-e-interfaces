@@ -8,15 +8,19 @@
     <title>CSS Grid training</title>
 </head>
 <body>
-    <div class="grid-container">
-        <div class="grid-item">
+    <div class="grid-container"> 
+        <div class="grid-item bg-primary">
             <div id="logo-container">
-                Logo Container
+                <div class="logo">
+                    <img src="./assets/paint-logo.jpg" width="50" height="50">
+                </div>
             </div>
             <div id="edition-tools-container">  
                 <div id="pencil-control">
                     <div class="icon-container">
-                        <button type="button" id="pencil">Lapiz</button>
+                        <button type="button" id="pencil" title="pencil">
+                            <img src="./assets/tools-icons/pencil.png" width="50" height="50">
+                        </button>
                     </div>
                     <div class="config-icon-container">
                         <button type="button" id="pencil-config">C</button>
@@ -25,7 +29,9 @@
                 </div>
                 <div id="eraser-control">
                     <div class="icon-container">
-                        <button type="button" id="eraser">Goma</button>
+                        <button type="button" id="eraser" title="eraser">
+                            <img src="./assets/tools-icons/eraser.png" width="50" height="50">
+                        </button>
                     </div>
                     <div class="config-icon-container">
                         <button type="button" id="eraser-config">C</button>
@@ -35,22 +41,34 @@
             </div>
             <div id="filters-container">
                 <div class="icon-container">
-                    <button type="button" id="negative" title="Negativo">Negativo</button>
+                    <button  type="button" id="negative" title="Negativo">
+                        <img src="./assets/filters-icons/negative.png" width="50" height="50" >
+                    </button>
                 </div>
                 <div class="icon-container">
-                    <button type="button" id="bright" title="Brillo">Brillo</button>
+                    <button type="button" id="bright" title="Brillo">
+                        <img src="./assets/filters-icons/bright.png" width="50" height="50" alt="Brillo">
+                    </button>
                 </div>
                 <div class="icon-container">
-                    <button type="button" id="binarization" title="Binarizacion"> Binarizacion</button>
+                    <button type="button" id="binarization" title="Binarizacion">
+                        <img src="./assets/filters-icons/binarization.png" width="50" height="50" alt="Binarizacion">
+                    </button>
                 </div>
                 <div class="icon-container">
-                    <button type="button" id="sepia" title="Sepia"> Sepia</button>
+                    <button type="button" id="sepia" title="Sepia"> 
+                        <img src="./assets/filters-icons/sepia.png" width="50" height="50">
+                    </button>
                 </div>
                 <div class="icon-container">
-                    <button type="button" id="border-detection" title="Detccion de Bordes">Deteccion de Bordes</button>
+                    <button type="button" id="border-detection" title="Deteccion de Bordes">
+                        <img src="./assets/filters-icons/border-detection.jpg" width="50" height="50">
+                    </button>
                 </div>
                 <div class="icon-container">
-                    <button type="button" id="blur" title="Blur">Blur</button>
+                    <button type="button" id="blur" title="Blur">
+                        <img src="./assets/filters-icons/blur.png" width="50" height="50" alt="Blur">
+                    </button>
                 </div>
             </div>
         </div>
@@ -59,19 +77,25 @@
                 <canvas id="canvas" width="1200" height="600"></canvas>
             </div>
         </div>
-        <div class="grid-item">
+        <div class="grid-item bg-primary">
             <div id="data-tools-container">
                 <div class="icon-container">
-                    <button onclick="document.getElementById('load-image').click();">Load Image</button>
+                    <button onclick="document.getElementById('load-image').click();" title="Cargar Imagen">
+                        <img src="./assets/data-icons/load-image.png" width="50" height="50">
+                    </button>
                     <input id="load-image" type="file" style="display: none;">
                 </div>
                 <div class="icon-container">
                     <a href="#" class="button" id="download-image" download="image.jpg">
-                        <button id="save-image">Guardar Imagen</button>
+                        <button id="save-image" title="Guardar Imagen">
+                            <img src="./assets/data-icons/save-image.png" width="50" height="50">
+                        </button>
                     </a>
                 </div>
                 <div class="icon-container">
-                    <button id="clear">Limpiar</button>
+                    <button id="clear"   title="Limpiar">
+                        <img src="./assets/data-icons/clear.png" width="50" height="50">
+                    </button>
                 </div>
             </div>
         </div>  
