@@ -6,6 +6,9 @@ const defaultW = canvas.width
 const defaultH = canvas.height
 let image
 
+ctx.font = "40px Arial";
+ctx.fillText("Carga una imagen para comenzar", 300, defaultH/2);
+
 // Utils
 
 const toggleClass = (element, className) => {
@@ -17,12 +20,41 @@ const toggleClass = (element, className) => {
     }
 }
 
+const generateColorsPanel = (tool, toolData, container) => {
+    const colors = ['rgb(255,255,255)', 'rgb(255,0,0)', 'rgb(0,255,0)', 'rgb(0,0,255)', 'rgb(255,255,0)', 'rgb(255,0,255)', 'rgb(0,0,0)' ]
+    for (let i = 0; i < 7; i++) {
+        let colorBox = document.createElement("div")
+        colorBox.style.width = '20px'
+        colorBox.style.height = '20px'
+        colorBox.style.border = '1px solid black'
+        if(tool.color == colors[i])  {
+            colorBox.classList.add(toolData.prefix + 'selected-color')
+        }
+        colorBox.classList.add('color-box')
+        colorBox.style.backgroundColor = colors[i]
+        colorBox.id = toolData.prefix + i
+        container.appendChild(colorBox)
+        colorBox.addEventListener('click', e => {
+            tool.color = e.target.style.backgroundColor
+            document.getElementsByClassName(toolData.prefix + 'selected-color')[0].classList.remove(toolData.prefix +'selected-color')
+            document.getElementById(toolData.prefix + i).classList.add(toolData.prefix +'selected-color')
+            toolData.color = colors[i]
+        })
+        colorBox.onmouseover = () => {
+            colorBox.style.cursor = "pointer"
+        }
+    }
+}
+
 // Pencil 
 
 let pencilData = {
     radius: 5,
-    color: 'red',
-    iconDeviation: 25
+    color: 'rgb(0,0,0)',
+    pencilCenter : (x,y) => {
+        return [ x - (pencilData.radius/2) + 3, y + 23 - (pencilData.radius/2) + 3]
+    },
+    prefix: 'p-'
 }
 
 const pencil = new Circle(ctx, pencilData.radius, pencilData.color)
@@ -36,7 +68,7 @@ pencilButton.addEventListener('click', () => {
 })
 
 const activatePencil = (e) => {
-    pencil.draw(e.layerX, e.layerY + pencilData.iconDeviation)
+    pencil.draw(...pencilData.pencilCenter(e.layerX, e.layerY))
     canvas.addEventListener('mousemove', draw)
     canvas.addEventListener('mouseup', () => {
         canvas.removeEventListener('mousemove', draw)
@@ -44,19 +76,28 @@ const activatePencil = (e) => {
 }
 
 const draw = (e) => {
-    pencil.draw(e.layerX, e.layerY + pencilData.iconDeviation)
+    pencil.draw(...pencilData.pencilCenter(e.layerX, e.layerY))
 }
 
-const pencilConfigContainer = document.getElementById('pencil-config-container')
+const pencilConfigContainer = document.getElementsByClassName('pencil-config-container')[0]
 const pencilConfig = document.getElementById('pencil-config')
-
-const openPencilConfig = () => { 
-    toggleClass(pencilConfigContainer, 'hide')
-}
+const closePencilConfig = document.getElementById('close-pencil-config')
 
 pencilConfig.addEventListener('click', (e) => {
-    openPencilConfig(e)
+    toggleClass(pencilConfigContainer, 'hide')
 })
+
+closePencilConfig.addEventListener('click', (e) => {
+    toggleClass(pencilConfigContainer, 'hide')
+})
+
+const pencilColorsPanel = document.getElementById('pencil-color-panel')
+generateColorsPanel(pencil, pencilData, pencilColorsPanel)
+
+const pencilSizeControl = document.getElementById('pencil-size-control')
+pencilSizeControl.onchange = (e) => {
+    pencil.radius = eraserData.radius = e.target.value
+}
 
 // Eraser 
 
@@ -65,7 +106,8 @@ let eraserData = {
     color: 'rgb(255,255,255)',
     eraserCenter : (x,y) => {
         return [ x - (eraserData.size/2) + 3, y + 20 - (eraserData.size/2) + 3]
-    }
+    },
+    prefix: 'e-'
 }
 
 const eraser = new Rectangle(ctx, eraserData.size, eraserData.size, eraserData.color)
@@ -103,32 +145,9 @@ closeEraserConfig.addEventListener('click', (e) => {
 })
 
 const eraserColorsPanel = document.getElementById('eraser-color-panel')
+generateColorsPanel(eraser, eraserData, eraserColorsPanel)
 
-let colors = ['rgb(255,255,255)', 'rgb(255,0,0)', 'rgb(0,255,0)', 'rgb(0,0,255)', 'rgb(255,255,0)', 'rgb(255,0,255)', 'rgb(0,0,0)' ]
-for (let i = 0; i < 7; i++) {
-    let colorBox = document.createElement("div")
-    colorBox.style.width = '20px'
-    colorBox.style.height = '20px'
-    colorBox.style.border = '1px solid black'
-    if(eraser.color == colors[i])  {
-        colorBox.classList.add('selected-color')
-    }
-    colorBox.classList.add('color-box')
-    colorBox.style.backgroundColor = colors[i]
-    colorBox.id = i
-    eraserColorsPanel.appendChild(colorBox)
-    colorBox.addEventListener('click', e => {
-        eraser.color = e.target.style.backgroundColor
-        document.getElementsByClassName('selected-color')[0].classList.remove('selected-color')
-        document.getElementById(i).classList.add('selected-color')
-        eraserData.color = colors[i]
-    })
-    colorBox.onmouseover = () => {
-        colorBox.style.cursor = "pointer"
-    }
-}
-
-const eraserSizeControl = document.getElementById('size-control')
+const eraserSizeControl = document.getElementById('eraser-size-control')
 eraserSizeControl.onchange = (e) => {
     eraser.width = eraser.height = eraserData.size = e.target.value
 }
@@ -350,11 +369,11 @@ loadImageInput.onchange = e => {
 }
 
 const getScales = (image) => {
-    
+    debugger
     let w = image.width
     let h = image.height
     // case image width and height fit canvas
-    if(w <= defaultW && h <= defaultW) {
+    if(w <= defaultW && h <= defaultH) {
         canvas.width = w
         canvas.height = h
         return [w, h]
@@ -363,15 +382,22 @@ const getScales = (image) => {
     canvas.height = 600 
     // case image width and height does not fit canvas
     if(w > canvas.width && h > canvas.height) {
-        return [canvas.width, canvas.height]
+        if(h > w ) {
+            canvas.width = 400
+            return [canvas.width, canvas.height]
+        }
+        else {
+            return [canvas.width, canvas.height]
+        }
     }
     // case only image width fit canvas
     if(w < canvas.width && h > canvas.height ) {
-        return [w, canvas.height]
+        canvas.width = 400
+        return [400, canvas.height]
     }
     // case only image height fit canvas
-    if(h < canvas.height && w > canvas.width) {
-        return [canvas.width, h]
+    if(w > canvas.width && h < canvas.height ) {
+        return [canvas.width, canvas.height]
     }
 }
 

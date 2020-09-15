@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/grid.css">
     <link rel="stylesheet" href="css/index.css">
-    <title>CSS Grid training</title>
+    <title>iPaint</title>
 </head>
 <body>
     <div class="grid-container"> 
@@ -18,7 +19,7 @@
             <div id="edition-tools-container">  
                 <div id="pencil-control">
                     <div class="icon-container">
-                        <button type="button" id="pencil" title="pencil">
+                        <button type="button" id="pencil" title="Lápiz">
                             <img src="./assets/tools-icons/pencil.png" width="50" height="50">
                         </button>
                     </div>
@@ -27,11 +28,32 @@
                             <img src="./assets/tools-icons/config.png" width="20" height="20">
                         </button>
                     </div>
-                    <div id="pencil-config-container" class="hide"></div>
+                    <div class="hide pencil-config-container">
+                        <div class="color-config-container">
+                            <div class="center-label">
+                                <label>Color</label>
+                            </div>
+                            <div class="colors-panel" id="pencil-color-panel"></div>
+                        </div>
+                        <div class="size-config-container">
+                            <div class="center-label">
+                                <label>Tamaño</label>
+                            </div>
+                            <div class="size-panel" id="pencil-size-panel">
+                                <input type="number" id="pencil-size-control" min=5 max=50 value="10">
+                            </div>
+                        </div>
+                        <div class="close-config-container">
+                            <button id="close-pencil-config" type="button" title="close">
+                                <img src="./assets/tools-icons/close.png" style="margin-top:3px" width="25" height="25">
+                            </button>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div id="eraser-control">
                     <div class="icon-container">
-                        <button type="button" id="eraser" title="eraser">
+                        <button type="button" id="eraser" title="Goma">
                             <img src="./assets/tools-icons/eraser.png" width="50" height="50">
                         </button>
                     </div>
@@ -41,26 +63,25 @@
                         </button>
                     </div>
                     <div class="hide eraser-config-container">
-                            <div class="color-config-container">
-                                <div class="center-label">
-                                    <label>Color</label>
-                                </div>
-                                <div class="colors-panel" id="eraser-color-panel"></div>
+                        <div class="color-config-container">
+                            <div class="center-label">
+                                <label>Color</label>
                             </div>
-                            <div class="size-config-container">
-                                <div class="center-label">
-                                    <label>Tamaño</label>
-                                </div>
-                                <div class="size-panel" id="eraser-size-panel">
-                                    <input type="number" id="size-control" min=5 max=50 value="10">
-                                </div>
+                            <div class="colors-panel" id="eraser-color-panel"></div>
+                        </div>
+                        <div class="size-config-container">
+                            <div class="center-label">
+                                <label>Tamaño</label>
                             </div>
-                            <div class="close-config-container">
-                                <button id="close-erase-config" type="button" title="close">
-                                    <img src="./assets/tools-icons/close.png" style="margin-top:3px" width="25" height="25">
-                                </button>
+                            <div class="size-panel" id="eraser-size-panel">
+                                <input type="number" id="eraser-size-control" min=5 max=50 value="10">
                             </div>
-                        
+                        </div>
+                        <div class="close-config-container">
+                            <button id="close-erase-config" type="button" title="close">
+                                <img src="./assets/tools-icons/close.png" style="margin-top:3px" width="25" height="25">
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
