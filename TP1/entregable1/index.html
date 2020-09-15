@@ -23,7 +23,9 @@
                         </button>
                     </div>
                     <div class="config-icon-container">
-                        <button type="button" id="pencil-config">C</button>
+                        <button type="button" id="pencil-config" title="config">
+                            <img src="./assets/tools-icons/config.png" width="20" height="20">
+                        </button>
                     </div>
                     <div id="pencil-config-container" class="hide"></div>
                 </div>
@@ -34,9 +36,32 @@
                         </button>
                     </div>
                     <div class="config-icon-container">
-                        <button type="button" id="eraser-config">C</button>
+                        <button type="button" id="eraser-config">
+                            <img src="./assets/tools-icons/config.png" width="20" height="20">
+                        </button>
                     </div>
-                    <div id="eraser-config-container" class="hide"></div>
+                    <div class="hide eraser-config-container">
+                            <div class="color-config-container">
+                                <div class="center-label">
+                                    <label>Color</label>
+                                </div>
+                                <div class="colors-panel" id="eraser-color-panel"></div>
+                            </div>
+                            <div class="size-config-container">
+                                <div class="center-label">
+                                    <label>Tamaño</label>
+                                </div>
+                                <div class="size-panel" id="eraser-size-panel">
+                                    <input type="number" id="size-control" min=5 max=50 value="10">
+                                </div>
+                            </div>
+                            <div class="close-config-container">
+                                <button id="close-erase-config" type="button" title="close">
+                                    <img src="./assets/tools-icons/close.png" style="margin-top:3px" width="25" height="25">
+                                </button>
+                            </div>
+                        
+                    </div>
                 </div>
             </div>
             <div id="filters-container">
@@ -93,7 +118,7 @@
                     </a>
                 </div>
                 <div class="icon-container">
-                    <button id="clear"   title="Limpiar">
+                    <button id="clear" title="Limpiar">
                         <img src="./assets/data-icons/clear.png" width="50" height="50">
                     </button>
                 </div>

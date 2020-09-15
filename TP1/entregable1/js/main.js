@@ -62,8 +62,10 @@ pencilConfig.addEventListener('click', (e) => {
 
 let eraserData = {
     size: 10,
-    color: 'white',
-    iconDeviation: 15
+    color: 'rgb(255,255,255)',
+    eraserCenter : (x,y) => {
+        return [ x - (eraserData.size/2) + 3, y + 20 - (eraserData.size/2) + 3]
+    }
 }
 
 const eraser = new Rectangle(ctx, eraserData.size, eraserData.size, eraserData.color)
@@ -77,7 +79,7 @@ eraserButton.addEventListener('click', () => {
 })
 
 const activateEraser = (e) => {
-    eraser.draw(e.layerX, e.layerY + eraserData.iconDeviation)
+    eraser.draw(...eraserData.eraserCenter(e.layerX, e.layerY))
     canvas.addEventListener('mousemove', erase)
     canvas.addEventListener('mouseup', () => {
         canvas.removeEventListener('mousemove', erase)
@@ -85,19 +87,51 @@ const activateEraser = (e) => {
 }
 
 const erase = (e) => {
-    eraser.draw(e.layerX, e.layerY + eraserData.iconDeviation)
+    eraser.draw(...eraserData.eraserCenter(e.layerX, e.layerY))
 }
 
-const eraserConfigContainer = document.getElementById('eraser-config-container')
+const eraserConfigContainer = document.getElementsByClassName('eraser-config-container')[0]
 const eraserConfig = document.getElementById('eraser-config')
-
-const openEraserConfig = () => { 
-    toggleClass(eraserConfigContainer, 'hide')
-}
+const closeEraserConfig = document.getElementById('close-erase-config')
 
 eraserConfig.addEventListener('click', (e) => {
-    openEraserConfig(e)
+    toggleClass(eraserConfigContainer, 'hide')
 })
+
+closeEraserConfig.addEventListener('click', (e) => {
+    toggleClass(eraserConfigContainer, 'hide')
+})
+
+const eraserColorsPanel = document.getElementById('eraser-color-panel')
+
+let colors = ['rgb(255,255,255)', 'rgb(255,0,0)', 'rgb(0,255,0)', 'rgb(0,0,255)', 'rgb(255,255,0)', 'rgb(255,0,255)', 'rgb(0,0,0)' ]
+for (let i = 0; i < 7; i++) {
+    let colorBox = document.createElement("div")
+    colorBox.style.width = '20px'
+    colorBox.style.height = '20px'
+    colorBox.style.border = '1px solid black'
+    if(eraser.color == colors[i])  {
+        colorBox.classList.add('selected-color')
+    }
+    colorBox.classList.add('color-box')
+    colorBox.style.backgroundColor = colors[i]
+    colorBox.id = i
+    eraserColorsPanel.appendChild(colorBox)
+    colorBox.addEventListener('click', e => {
+        eraser.color = e.target.style.backgroundColor
+        document.getElementsByClassName('selected-color')[0].classList.remove('selected-color')
+        document.getElementById(i).classList.add('selected-color')
+        eraserData.color = colors[i]
+    })
+    colorBox.onmouseover = () => {
+        colorBox.style.cursor = "pointer"
+    }
+}
+
+const eraserSizeControl = document.getElementById('size-control')
+eraserSizeControl.onchange = (e) => {
+    eraser.width = eraser.height = eraserData.size = e.target.value
+}
 
 ////////////////// Filters //////////////////////
 

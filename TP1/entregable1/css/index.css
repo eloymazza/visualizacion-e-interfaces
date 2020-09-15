@@ -11,10 +11,43 @@
 }
 
 .config-icon-container {
+    display: flex;
     width: 25px;
     height: 25px;
     border: 1px solid black;
-    box-sizing: border-box;
+}
+
+.color-config-container {
+    width: 60%;
+    height: 95%;
+}
+
+.colors-panel {
+    margin-top: 7px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.size-panel {
+    margin-top: 7px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.size-config-container {
+    width: 25%;
+    height: 95%;
+}
+
+.close-config-container {
+    display: flex;
+    margin: 5px;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+    height: 90%;
 }
 
 #logo-container {
@@ -25,7 +58,6 @@
 
 #edition-tools-container {
     height: 20%;
-    border: 1px solid black;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -67,8 +99,9 @@
     align-items: center;
 }
 
-#eraser-config-container {
+.eraser-config-container {
     position: absolute;
+    display: flex;
     height: 10%;
     width: 25%;
     border: 1px solid black;
@@ -79,7 +112,6 @@
 
 #filters-container {
     height: 60%;
-    border: 1px solid black;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -90,7 +122,6 @@
 #data-tools-container {
     margin-top: 10vh;
     height: 80vh;
-    border: 1px solid black;
     box-sizing: border-box;
     display: flex;  
     flex-direction: column;
@@ -122,9 +153,22 @@
     height: 100%;
 }
 
+.center-label { 
+    text-align: center;
+    margin-top: 3px;
+}
+
 /* Colors */ 
 
 .bg-primary { 
     background-color: rgb(85, 85, 85);
+}
+
+.selected-color { 
+    box-shadow: 0px 0px 5px 1px rgb(26, 83, 241);
+}
+
+button { 
+    cursor: pointer
 }
 
