@@ -65,7 +65,7 @@
 }
 
 #edition-tools-container {
-    height: 20%;
+    height: 23%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -120,7 +120,7 @@
 }
 
 #filters-container {
-    height: 60%;
+    height: 65%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
