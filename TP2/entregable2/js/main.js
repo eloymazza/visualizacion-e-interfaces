@@ -136,10 +136,110 @@ const dropToken = (column) => {
             new Circle(tctx, space.x, space.y, currentPlayer.color, "black", 2, 27).draw()
             space.state = currentPlayer.id
             dropped = true
+            evaluateWinCondition(column, row)
         }
         row--
     }
     currentPlayer = currentPlayer.id === 1 ? p2 : p1
+}
+
+const evaluateWinCondition = (column, row) => {
+    if(evaluateHorizontal(row) || evaluateVertical(column) || evaluateDiagonals(column, row))  alert('won')
+}
+
+const evaluateHorizontal = (row) => {
+    let won = false
+    let tokenCount = 0
+    let column = 0
+    while(column < colsNumber && !won) {
+        if(gameState[column][row].state === currentPlayer.id) {
+            tokenCount++
+            if(tokenCount === 4) won = true
+        } 
+        else {
+            tokenCount = 0
+        }
+        column++
+    }
+    return won
+}
+
+const evaluateVertical = (column) => {
+    let won = false
+    let tokenCount = 0
+    let row = 0
+    while(row < rowsNumber && !won) {
+        if(gameState[column][row].state === currentPlayer.id) {
+            tokenCount++
+        } 
+        else {
+            tokenCount = 0
+        }
+        if(tokenCount === 4) won = true
+        row++
+    }
+    return won
+}
+
+const evaluateDiagonals = (column, row) => {
+    return evaluateLeftUpDiagonal(column, row) || evaluateRightUpDiagonal(column, row)
+}
+
+const evaluateLeftUpDiagonal = (column, row) => {
+    let won = false
+    let tokenCount = 0
+    while(!isLeftBorder(column) && !isBottomBorder(row)) {
+        column--
+        row++
+    }
+    // left-up diagonal
+    while(column < colsNumber && row >= 0 && !won) {
+        if(gameState[column][row].state === currentPlayer.id) {
+            tokenCount++
+        } 
+        else {
+            tokenCount = 0
+        }
+        if(tokenCount === 4) won = true
+        column++
+        row--
+    }
+    return won
+}
+
+const evaluateRightUpDiagonal = (column, row) => {
+    debugger
+    let won = false
+    let tokenCount = 0
+    while(!isRightBorder(column) && !isBottomBorder(row)) {
+        column++
+        row++
+    }
+    // right-up diagonal
+    while(column >= 0 && row >= 0 && !won) {
+        if(gameState[column][row].state === currentPlayer.id) {
+            tokenCount++
+        } 
+        else {
+            tokenCount = 0
+        }
+        if(tokenCount === 4) won = true
+        column--
+        row--
+    }
+    return won
+}
+
+const isLeftBorder = (column) => {
+    return column == 0 
+}
+
+const isRightBorder = (column) => {
+    return column == colsNumber-1
+}
+
+const isBottomBorder = (row) => {
+    return row == rowsNumber-1
 }
 
 // Listeners
