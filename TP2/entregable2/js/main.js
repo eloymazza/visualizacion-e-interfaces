@@ -1,8 +1,7 @@
 // players config
-const p1 = new Player(1, 'red')
-const p2 = new Player(2, 'yellow')
-
-let currentPlayer = p1
+let p1
+let p2 
+let currentPlayer
 
 // Board config
 
@@ -123,14 +122,22 @@ const generateTokens = (panel, player) => {
         for (let row = 1; row <= tokenPanelrows; row++) {
             spaceX = (tokenPanelColumnsWidth * column) - (tokenPanelColumnsWidth/2)
             spaceY = (tokenPanelRowsHeight * row) - (tokenPanelRowsHeight/2)
-            let newToken = new Circle(tctx, panel.x + spaceX, panel.y + spaceY, player.color, "black", 2, 25)
-            newToken.draw()
+            let newToken = new Token(tctx, panel.x + spaceX, panel.y + spaceY, player.tokenImage, "black", 2, 25)
             player.addToken(newToken)
+            newToken.drawToken()
         }
     }
 }
 
-generateBoard()
+let tokenP1 = new Image(50, 50)
+tokenP1.src = './images/p1.png'
+tokenP1.onload = () => {
+    p1 = new Player(1, tokenP1)
+    p2 = new Player(2, tokenP1)
+    currentPlayer = p1
+    generateBoard()
+}
+
 
 // Drag token
 
@@ -143,14 +150,12 @@ const evaluateDrag = (e) => {
     }
 }
 
-
-
 const dragToken = (e) => {
     tokenCanvas.addEventListener("mouseup", evaluateDrop)
     let activeToken = currentPlayer.activeToken
     activeToken.setCoords(e.layerX, e.layerY)
     redrawCanvas(tctx)
-    activeToken.draw()
+    activeToken.drawToken()
    
 }
 
@@ -303,10 +308,13 @@ tokenCanvas.addEventListener("mousedown", evaluateDrag)
 
 // reset game
 const resetGame = () => { 
+    p1 = new Player(1, tokenP1)
+    p2 = new Player(2, tokenP1)
     dropZones = []
     gameState = []
     columnFilling = [0,0,0,0,0,0,0]
     gameFinished = false
+    currentPlayer = p1
     clearCanvas(tctx)
     clearCanvas(bctx)
     generateBoard()

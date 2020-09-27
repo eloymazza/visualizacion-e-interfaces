@@ -1,9 +1,9 @@
 
 class Player {
 
-    constructor(id, color) {
+    constructor(id, tokenImage) {
         this.id = id
-        this.color = color
+        this.tokenImage = tokenImage
         this.tokens = []
         this.tokensCount = 0
         this.activeToken = null
@@ -36,7 +36,7 @@ class Player {
 
     drawTokens() {
         this.tokens.forEach(token => {
-            token.draw()
+            token.drawToken()
         });
     }
 }
