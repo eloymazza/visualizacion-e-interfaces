@@ -1,13 +1,6 @@
 // players config
-const p1 = {
-    color: "red",
-    id: 1
-}
-
-const p2 = {
-    color: "yellow",
-    id: 2
-}
+const p1 = new Player(1, 'red')
+const p2 = new Player(2, 'yellow')
 
 let currentPlayer = p1
 
@@ -16,7 +9,7 @@ let currentPlayer = p1
 const leftPanel = {
     x: 50,
     y: 100,
-    color: "red",
+    color: "blue",
     width: 245,
     height: 420,
     strokeColor: "black",
@@ -36,7 +29,7 @@ const centerPanel = {
 const rightPanel = {
     x: 900,
     y: 100,
-    color: "yellow",
+    color: "blue",
     width: 245,
     height: 420,
     strokeColor: "black",
@@ -47,6 +40,11 @@ const colsNumber = 7
 const rowsNumber = 6
 const columnWidth = centerPanel.width/colsNumber
 const rowHeight = centerPanel.height/rowsNumber
+
+const tokenPanelColumns = 3
+const tokenPanelrows = 7
+const tokenPanelColumnsWidth = leftPanel.width/tokenPanelColumns
+const tokenPanelRowsHeight = leftPanel.height/tokenPanelrows
 
 
 // Board Canvas
@@ -69,6 +67,9 @@ let rightTokenPanel
 let dropZones = []
 let gameState = []
 
+let columnFilling = [0,0,0,0,0,0,0]
+let gameFinished = false
+
 const generateBoard = () => {
     
     leftTokenPanel = new Rect(bctx, ...Object.values(leftPanel))
@@ -82,7 +83,9 @@ const generateBoard = () => {
 
     generateSpaces(board)
     generateDropZones(board)
-   
+    generateTokens(leftTokenPanel, p1)
+    generateTokens(rightTokenPanel, p2)
+
 }
 
 const generateDropZones = (panel) => {
@@ -113,15 +116,59 @@ const generateSpaces = (panel) => {
     }
 }
 
+const generateTokens = (panel, player) => {
+    let spaceX
+    let spaceY
+    for (let column = 1; column <= tokenPanelColumns; column++) {
+        for (let row = 1; row <= tokenPanelrows; row++) {
+            spaceX = (tokenPanelColumnsWidth * column) - (tokenPanelColumnsWidth/2)
+            spaceY = (tokenPanelRowsHeight * row) - (tokenPanelRowsHeight/2)
+            let newToken = new Circle(tctx, panel.x + spaceX, panel.y + spaceY, player.color, "black", 2, 25)
+            newToken.draw()
+            player.addToken(newToken)
+        }
+    }
+}
+
 generateBoard()
 
-// Board interactions
+// Drag token
+
+
+const evaluateDrag = (e) => {
+    let clickX = e.layerX
+    let clickY = e.layerY  
+    if(currentPlayer.tokenClicked(clickX, clickY) ) {
+        tokenCanvas.addEventListener('mousemove', dragToken)
+    }
+}
+
+
+
+const dragToken = (e) => {
+    tokenCanvas.addEventListener("mouseup", evaluateDrop)
+    let activeToken = currentPlayer.activeToken
+    activeToken.setCoords(e.layerX, e.layerY)
+    redrawCanvas(tctx)
+    activeToken.draw()
+   
+}
+
+const redrawCanvas = (ctx) => {
+    clearCanvas(ctx)
+    p1.drawTokens()
+    p2.drawTokens()
+}
+
+// Drop Token
 
 const evaluateDrop = (e) => { 
+    tokenCanvas.removeEventListener('mousemove', dragToken)
+    tokenCanvas.removeEventListener("mouseup", evaluateDrop)
     let clickX = e.layerX
     let clickY = e.layerY
     for (let dropZone = 0; dropZone < dropZones.length; dropZone++) {
-        if(dropZones[dropZone].clicked(clickX, clickY)) {
+        if(dropZones[dropZone].clicked(clickX, clickY) && columnFilling[dropZone] != rowsNumber) {
             dropToken(dropZone)
         }
     }
@@ -133,18 +180,24 @@ const dropToken = (column) => {
     while (row >= 0 && !dropped) {
         let space = gameState[column][row]
         if(space.state === 0) { 
-            new Circle(tctx, space.x, space.y, currentPlayer.color, "black", 2, 27).draw()
+            currentPlayer.activeToken.setCoords(space.x, space.y)
             space.state = currentPlayer.id
+            redrawCanvas(tctx)
             dropped = true
             evaluateWinCondition(column, row)
         }
         row--
     }
     currentPlayer = currentPlayer.id === 1 ? p2 : p1
+    columnFilling[column]++
 }
 
 const evaluateWinCondition = (column, row) => {
-    if(evaluateHorizontal(row) || evaluateVertical(column) || evaluateDiagonals(column, row))  alert('won')
+    if(!gameFinished && evaluateHorizontal(row) || evaluateVertical(column) || evaluateDiagonals(column, row)) {
+        gameFinished = true
+        tokenCanvas.removeEventListener("mouseup", evaluateDrop)
+        tokenCanvas.removeEventListener("mousedown", evaluateDrag)
+    }
 }
 
 const evaluateHorizontal = (row) => {
@@ -208,7 +261,6 @@ const evaluateLeftUpDiagonal = (column, row) => {
 }
 
 const evaluateRightUpDiagonal = (column, row) => {
-    debugger
     let won = false
     let tokenCount = 0
     while(!isRightBorder(column) && !isBottomBorder(row)) {
@@ -242,11 +294,33 @@ const isBottomBorder = (row) => {
     return row == rowsNumber-1
 }
 
+
 // Listeners
 
-tokenCanvas.addEventListener("mouseup", evaluateDrop)
+
+tokenCanvas.addEventListener("mousedown", evaluateDrag)
 
 
+// reset game
+const resetGame = () => { 
+    dropZones = []
+    gameState = []
+    columnFilling = [0,0,0,0,0,0,0]
+    gameFinished = false
+    clearCanvas(tctx)
+    clearCanvas(bctx)
+    generateBoard()
+    tokenCanvas.addEventListener("mouseup", evaluateDrop)
+}
+
+const clearCanvas = (ctx) => {
+    ctx.fillStyle = "white"
+    ctx.clearRect(0,0, width, height)
+}
+
+
+const reset = document.querySelector('#reset')
+reset.addEventListener("click", resetGame)
 
 
 

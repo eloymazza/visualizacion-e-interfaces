@@ -14,5 +14,8 @@ canvas {
     background-color: transparent;
     left: 10%;
     top: 5%;
+    cursor: pointer;
 }
+
+
 
