@@ -39,7 +39,7 @@ const rightPanel = {
 const resetBtn = {
     x: centerPanel.x + centerPanel.width/2 - 100,
     y: 620,
-    color:"66552e",
+    color:"#66552e",
     width: 200,
     height: 50,
     strokeColor: "black",
@@ -92,8 +92,8 @@ const generateBoard = () => {
     rightTokenPanel.draw()
 
     resetButton = new Button(bctx, ...Object.values(resetBtn))
-    resetButton.drawButton()
-
+    resetButton.draw()
+    
     generateSpaces(board)
     generateDropZones(board)
     generateTokens(leftTokenPanel, p1)
@@ -125,7 +125,7 @@ const showGameInstructions = () => {
 const displayWinMessage = () => {
     tctx.fillStyle = "white"
     tctx.font = "30px Arial";
-    tctx.fillText(`P${currentPlayer.id} ha ganado !!!`, centerPanel.x + centerPanel.width/2 - 100 , centerPanel.y + centerPanel.height + 45)
+    tctx.fillText(`P${currentPlayer.id} ha ganado !!!`, centerPanel.x + centerPanel.width/2 - 105 , centerPanel.y + centerPanel.height + 55)
 }
 
 const generateDropZones = (panel) => {
@@ -376,7 +376,11 @@ const clearCanvas = (ctx) => {
 }
 
 const evaluateClick = (e) => {
-   if(resetButton.clicked(e.layerX, e.layerY)) alert("tocado") 
+   if(resetButton.clicked(e.layerX, e.layerY)) {
+       resetButton.clickEffect()
+       redrawCanvas(tctx)
+       setTimeout(resetGame, 50)
+   }
 }
 
 tokenCanvas.addEventListener("click", evaluateClick)

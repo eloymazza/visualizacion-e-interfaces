@@ -129,11 +129,18 @@ class Button extends Rect {
         this.label = label
     }
     
-    drawButton() {
+    draw(){
         super.draw()
         this.ctx.fillStyle = "white"
         this.ctx.font = "25px Arial";
         this.ctx.fillText(this.label, this.x + this.w/2 - 70, this.y + this.h/2 + 9)
+    }
+
+    clickEffect() {
+        this.ctx.fillStyle = "white"
+        this.ctx.clearRect(this.x,this.y, this.w, this.h)
+        this.y += 5
+        this.draw()
     }
 
 }

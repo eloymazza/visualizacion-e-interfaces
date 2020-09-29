@@ -42,6 +42,6 @@ class Player {
     }
 
     tokenToDefault() {
-        this.activeToken.backToDefault()
+        if(this.activeToken) this.activeToken.backToDefault()
     }
 }
