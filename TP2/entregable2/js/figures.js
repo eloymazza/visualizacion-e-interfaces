@@ -66,7 +66,8 @@ class Rect extends Shape {
         this.y = y - this.h/2
     } 
 
-    clicked = (x, y) => {
+    clicked(x, y) {
+        
         return x >= this.x && x <= this.x + this.w && y >= this.y && y <= this.y + this.h
     }
 

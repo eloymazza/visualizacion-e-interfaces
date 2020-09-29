@@ -115,11 +115,11 @@ const turnInstructions = () => {
 const showGameInstructions = () => {
     tctx.font = "15px Arial";
     tctx.fillText(`Instrucciones:`,
-    centerPanel.x + centerPanel.width/2 - 50, centerPanel.y + centerPanel.height + 25)
+    centerPanel.x + centerPanel.width/2 - 50, centerPanel.y + centerPanel.height + 30)
     tctx.fillText(`Toma una ficha del panel correspondiente y suéltala en la columna deseada`,
-    centerPanel.x + centerPanel.width/2 - 250, centerPanel.y + centerPanel.height + 45)
+    centerPanel.x + centerPanel.width/2 - 250, centerPanel.y + centerPanel.height + 50)
     tctx.fillText(`Forma una linea de 4 fichas consecutivas en cualquier direccion para ganar`,
-    centerPanel.x + centerPanel.width/2 - 245, centerPanel.y + centerPanel.height + 65)
+    centerPanel.x + centerPanel.width/2 - 245, centerPanel.y + centerPanel.height + 70)
 }
 
 const displayWinMessage = () => {
@@ -376,7 +376,7 @@ const clearCanvas = (ctx) => {
 }
 
 const evaluateClick = (e) => {
-   
+   if(resetButton.clicked(e.layerX, e.layerY)) alert("tocado") 
 }
 
-canvas.addEventListener("click", evaluateClick)
+tokenCanvas.addEventListener("click", evaluateClick)
