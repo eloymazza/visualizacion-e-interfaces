@@ -3,17 +3,21 @@
     padding: 0;
 }
 
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 #viewport {
-    width: 100vw;
-    height: 88vh;
+    width: 1200px;
     position: relative;
 }
 
 canvas {
     position: absolute;
     background-color: transparent;
-    left: 10%;
-    top: 5%;
     cursor: pointer;
 }
 

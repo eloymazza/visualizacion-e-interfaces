@@ -55,7 +55,7 @@ class Rect extends Shape {
 
     getH = () => this.h
 
-    draw = () => {
+    draw() {
         super.draw()
         this.ctx.fillRect(this.x, this.y, this.w, this.h)
         this.ctx.strokeRect(this.x, this.y, this.w, this.h)
@@ -120,4 +120,19 @@ class Token extends Circle {
         this.x = this.defaultX
         this.y = this.defaultY
     }
+}
+
+class Button extends Rect {
+    constructor(ctx, x, y, fill, w, h, strokeColor, lineWidth, label) {
+        super(ctx, x, y, fill, w, h, strokeColor, lineWidth)
+        this.label = label
+    }
+    
+    drawButton() {
+        super.draw()
+        this.ctx.fillStyle = "white"
+        this.ctx.font = "25px Arial";
+        this.ctx.fillText(this.label, this.x + this.w/2 - 70, this.y + this.h/2 + 9)
+    }
+
 }

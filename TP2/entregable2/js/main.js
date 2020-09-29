@@ -36,6 +36,17 @@ const rightPanel = {
     lineWidth: 3
 }
 
+const resetBtn = {
+    x: centerPanel.x + centerPanel.width/2 - 100,
+    y: 620,
+    color:"66552e",
+    width: 200,
+    height: 50,
+    strokeColor: "black",
+    lineWidth: 2,
+    label: "Reset Game"
+}
+
 const colsNumber = 7
 const rowsNumber = 6
 const columnWidth = centerPanel.width/colsNumber
@@ -79,6 +90,9 @@ const generateBoard = () => {
 
     rightTokenPanel = new Rect(bctx, ...Object.values(rightPanel))
     rightTokenPanel.draw()
+
+    resetButton = new Button(bctx, ...Object.values(resetBtn))
+    resetButton.drawButton()
 
     generateSpaces(board)
     generateDropZones(board)
@@ -175,11 +189,11 @@ const evaluateDrag = (e) => {
     let clickY = e.layerY  
     if(currentPlayer.tokenClicked(clickX, clickY) ) {
         tokenCanvas.addEventListener('mousemove', dragToken)
+        tokenCanvas.addEventListener("mouseup", evaluateDrop)
     }
 }
 
 const dragToken = (e) => {
-    tokenCanvas.addEventListener("mouseup", evaluateDrop)
     let activeToken = currentPlayer.activeToken
     activeToken.setCoords(e.layerX, e.layerY)
     redrawCanvas(tctx)
@@ -336,12 +350,9 @@ const isBottomBorder = (row) => {
     return row == rowsNumber-1
 }
 
-
 // Listeners
 
-
 tokenCanvas.addEventListener("mousedown", evaluateDrag)
-
 
 // reset game
 const resetGame = () => { 
@@ -355,8 +366,8 @@ const resetGame = () => {
     clearCanvas(tctx)
     clearCanvas(bctx)
     generateBoard()
-    tokenCanvas.addEventListener("mouseup", evaluateDrop)
     tokenCanvas.addEventListener("mousedown", evaluateDrag)
+    tokenCanvas.addEventListener("mouseup", evaluateDrop)
 }
 
 const clearCanvas = (ctx) => {
@@ -364,8 +375,8 @@ const clearCanvas = (ctx) => {
     ctx.clearRect(0,0, width, height)
 }
 
-const reset = document.querySelector('#reset')
-reset.addEventListener("click", resetGame)
+const evaluateClick = (e) => {
+   
+}
 
-
-
+canvas.addEventListener("click", evaluateClick)
