@@ -2,13 +2,14 @@
 let p1
 let p2 
 let currentPlayer
+let winner = null
 
 // Board config
 
 const leftPanel = {
     x: 50,
     y: 100,
-    color: "blue",
+    color: "#66552e",
     width: 245,
     height: 420,
     strokeColor: "black",
@@ -18,7 +19,7 @@ const leftPanel = {
 const centerPanel = {
     x: 350,
     y: 100,
-    color: "blue",
+    color: "#66552e",
     width: 490,
     height: 420,
     strokeColor: "black",
@@ -28,7 +29,7 @@ const centerPanel = {
 const rightPanel = {
     x: 900,
     y: 100,
-    color: "blue",
+    color: "#66552e",
     width: 245,
     height: 420,
     strokeColor: "black",
@@ -67,7 +68,6 @@ let dropZones = []
 let gameState = []
 
 let columnFilling = [0,0,0,0,0,0,0]
-let gameFinished = false
 
 const generateBoard = () => {
     
@@ -84,7 +84,34 @@ const generateBoard = () => {
     generateDropZones(board)
     generateTokens(leftTokenPanel, p1)
     generateTokens(rightTokenPanel, p2)
+    turnInstructions()
+}
 
+const turnInstructions = () => { 
+    let panel = currentPlayer.panel
+    let id = currentPlayer.id
+    if(winner == null) {
+        tctx.fillStyle = "white"
+        tctx.font = "25px Arial";
+        tctx.fillText(`Turno P${id}`, panel.x + panel.width/2 - 45, panel.y - 20)
+        showGameInstructions()
+    }
+}
+
+const showGameInstructions = () => {
+    tctx.font = "15px Arial";
+    tctx.fillText(`Instrucciones:`,
+    centerPanel.x + centerPanel.width/2 - 50, centerPanel.y + centerPanel.height + 25)
+    tctx.fillText(`Toma una ficha del panel correspondiente y suéltala en la columna deseada`,
+    centerPanel.x + centerPanel.width/2 - 250, centerPanel.y + centerPanel.height + 45)
+    tctx.fillText(`Forma una linea de 4 fichas consecutivas en cualquier direccion para ganar`,
+    centerPanel.x + centerPanel.width/2 - 245, centerPanel.y + centerPanel.height + 65)
+}
+
+const displayWinMessage = () => {
+    tctx.fillStyle = "white"
+    tctx.font = "30px Arial";
+    tctx.fillText(`P${currentPlayer.id} ha ganado !!!`, centerPanel.x + centerPanel.width/2 - 100 , centerPanel.y + centerPanel.height + 45)
 }
 
 const generateDropZones = (panel) => {
@@ -122,25 +149,26 @@ const generateTokens = (panel, player) => {
         for (let row = 1; row <= tokenPanelrows; row++) {
             spaceX = (tokenPanelColumnsWidth * column) - (tokenPanelColumnsWidth/2)
             spaceY = (tokenPanelRowsHeight * row) - (tokenPanelRowsHeight/2)
-            let newToken = new Token(tctx, panel.x + spaceX, panel.y + spaceY, player.tokenImage, "black", 2, 25)
+            let newToken = new Token(tctx, panel.x + spaceX, panel.y + spaceY, player.tokenImage, "black", 3, 25)
             player.addToken(newToken)
             newToken.drawToken()
         }
     }
 }
 
-let tokenP1 = new Image(50, 50)
+let tokenP1 = new Image(55, 55)
+let tokenP2 = new Image(55, 55)
 tokenP1.src = './images/p1.png'
-tokenP1.onload = () => {
-    p1 = new Player(1, tokenP1)
-    p2 = new Player(2, tokenP1)
+tokenP2.src = './images/p2.png'
+tokenP2.onload = () => {
+    p1 = new Player(1, tokenP1, leftPanel)
+    p2 = new Player(2, tokenP2, rightPanel)
     currentPlayer = p1
     generateBoard()
 }
 
 
 // Drag token
-
 
 const evaluateDrag = (e) => {
     let clickX = e.layerX
@@ -155,8 +183,8 @@ const dragToken = (e) => {
     let activeToken = currentPlayer.activeToken
     activeToken.setCoords(e.layerX, e.layerY)
     redrawCanvas(tctx)
+    turnInstructions()
     activeToken.drawToken()
-   
 }
 
 const redrawCanvas = (ctx) => {
@@ -172,10 +200,17 @@ const evaluateDrop = (e) => {
     tokenCanvas.removeEventListener("mouseup", evaluateDrop)
     let clickX = e.layerX
     let clickY = e.layerY
+    let droped = false
     for (let dropZone = 0; dropZone < dropZones.length; dropZone++) {
         if(dropZones[dropZone].clicked(clickX, clickY) && columnFilling[dropZone] != rowsNumber) {
             dropToken(dropZone)
+            droped = true
         }
+    }
+    if(!droped) {
+        currentPlayer.tokenToDefault()
+        redrawCanvas(tctx)
+        turnInstructions()
     }
 }
 
@@ -195,13 +230,15 @@ const dropToken = (column) => {
     }
     currentPlayer = currentPlayer.id === 1 ? p2 : p1
     columnFilling[column]++
+    turnInstructions()
 }
 
 const evaluateWinCondition = (column, row) => {
-    if(!gameFinished && evaluateHorizontal(row) || evaluateVertical(column) || evaluateDiagonals(column, row)) {
-        gameFinished = true
+    if(evaluateHorizontal(row) || evaluateVertical(column) || evaluateDiagonals(column, row)) {
+        winner = currentPlayer
         tokenCanvas.removeEventListener("mouseup", evaluateDrop)
         tokenCanvas.removeEventListener("mousedown", evaluateDrag)
+        displayWinMessage()
     }
 }
 
@@ -308,24 +345,24 @@ tokenCanvas.addEventListener("mousedown", evaluateDrag)
 
 // reset game
 const resetGame = () => { 
-    p1 = new Player(1, tokenP1)
-    p2 = new Player(2, tokenP1)
+    p1 = new Player(1, tokenP1, leftPanel)
+    p2 = new Player(2, tokenP2, rightPanel)
     dropZones = []
     gameState = []
     columnFilling = [0,0,0,0,0,0,0]
-    gameFinished = false
+    winner = null
     currentPlayer = p1
     clearCanvas(tctx)
     clearCanvas(bctx)
     generateBoard()
     tokenCanvas.addEventListener("mouseup", evaluateDrop)
+    tokenCanvas.addEventListener("mousedown", evaluateDrag)
 }
 
 const clearCanvas = (ctx) => {
     ctx.fillStyle = "white"
     ctx.clearRect(0,0, width, height)
 }
-
 
 const reset = document.querySelector('#reset')
 reset.addEventListener("click", resetGame)

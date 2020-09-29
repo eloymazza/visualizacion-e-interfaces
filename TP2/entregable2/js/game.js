@@ -1,12 +1,13 @@
 
 class Player {
 
-    constructor(id, tokenImage) {
+    constructor(id, tokenImage, panel) {
         this.id = id
         this.tokenImage = tokenImage
         this.tokens = []
         this.tokensCount = 0
         this.activeToken = null
+        this.panel = panel
     }
 
     addToken(token) {
@@ -38,5 +39,9 @@ class Player {
         this.tokens.forEach(token => {
             token.drawToken()
         });
+    }
+
+    tokenToDefault() {
+        this.activeToken.backToDefault()
     }
 }

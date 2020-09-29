@@ -5,7 +5,7 @@
 
 #viewport {
     width: 100vw;
-    height: 100vh;
+    height: 88vh;
     position: relative;
 }
 
@@ -17,5 +17,39 @@ canvas {
     cursor: pointer;
 }
 
+body { 
+    background-image: url('../images/background.jpg');
+}
 
+.reset-container {
+    width: 98vw;
+    display: flex;
+    justify-content: center;
+}
 
+#reset {
+    font-weight: bolder;
+    font-size: 22px;
+    color: white;
+    stroke-width: 1px;
+    -webkit-text-stroke: 1px black;
+    background-color: #66552e;
+    height: 50px;
+    width: 150px;
+    cursor: pointer;
+    border: 2px solid black;
+}
+
+#reset:hover {
+    background-color: #4e4428;
+}
+
+#reset:active {
+    transform: translateY(3px);
+
+}
+
+#reset:focus {
+    outline: none;
+    box-shadow: none;
+}

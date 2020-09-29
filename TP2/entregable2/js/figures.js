@@ -104,6 +104,8 @@ class Circle extends Shape {
 class Token extends Circle {
     constructor(ctx, x, y, fill, strokeColor, lineWidth, r) {
         super(ctx, x, y, fill, strokeColor, lineWidth, r)
+        this.defaultX = x
+        this.defaultY = y
     }
 
     drawToken() {
@@ -112,5 +114,10 @@ class Token extends Circle {
         this.ctx.stroke()
         this.ctx.drawImage(this.fill, this.x- this.r, this.y- this.r, 50, 50)
         this.ctx.closePath()
+    }
+
+    backToDefault() {
+        this.x = this.defaultX
+        this.y = this.defaultY
     }
 }
