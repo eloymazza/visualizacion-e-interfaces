@@ -1,6 +1,4 @@
-
 class Player {
-
     constructor(id, tokenImage, panel) {
         this.id = id
         this.tokenImage = tokenImage
