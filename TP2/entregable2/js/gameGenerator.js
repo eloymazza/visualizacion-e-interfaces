@@ -1,5 +1,6 @@
 // Player class
-
+// IMPORTANTE: puse la clase player aca ya que por alguna razon me tiraba not found en github pages. 
+// Cargaba todos los js menos player.js donde habia puesto esta clase
 class Player {
     constructor(id, tokenImage, panel) {
         this.id = id
