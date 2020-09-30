@@ -1,4 +1,4 @@
-class Shape {
+class Figure {
 
     constructor (ctx, x, y, fill, strokeColor, lineWidth) {
         this.ctx = ctx
@@ -35,7 +35,7 @@ class Shape {
 
 }
 
-class Rect extends Shape { 
+class Rect extends Figure { 
 
     constructor (ctx, x, y, fill, w, h, strokeColor, lineWidth) {
         super(ctx, x, y, fill, strokeColor, lineWidth)
@@ -73,7 +73,7 @@ class Rect extends Shape {
 
 }
 
-class Circle extends Shape {
+class Circle extends Figure {
 
     constructor (ctx, x, y, fill, strokeColor, lineWidth, r) {
         super(ctx, x, y, fill, strokeColor, lineWidth)
