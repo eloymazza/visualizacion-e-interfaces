@@ -2,11 +2,11 @@ const loader = document.querySelector(".loader")
 const submitButton = document.querySelector("#submit")
 const buttonWidth = 150
 const maxProgress = 45
-const minProgress = 20
+const minProgress = 10
 let currentProgress = 0
 
 const startTransition = () => {
-    submitButton.innerText = "Processing Transaction.."
+    submitButton.innerText = "Processing Transaction..."
     addProgress()
 }
 

@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+}
+
+@keyframes fade-in {
+    0% {
+        background-color: blue;
+    }
+    100% {
+        background-color: white;
+    }
+}
+
+.element { 
+    position: absolute;
+    width: 3px;
+    height: 25px;
+    background-color: blue;
+    display: inline-block;
+    transform-origin: bottom;
+    animation: fade-in 1s linear infinite forwards;
+}
+
+
+.element:nth-child(1) {
+    transform: translate(97px, 65px);
+}
+.element:nth-child(2) {
+    transform: translate(104px, 68px) rotate(45deg);
+    animation-delay: 0.12s;
+}
+.element:nth-child(3) {
+    transform: translate(107px, 75px) rotate(90deg);
+    animation-delay: 0.25s;
+}
+.element:nth-child(4) {
+    transform: translate(104px, 82px) rotate(135deg);
+    animation-delay: 0.37s;
+}
+.element:nth-child(5) {
+    transform: translate(97px, 85px) rotate(180deg);
+    animation-delay: 0.5s;
+}
+.element:nth-child(6) {
+    transform: translate(90px, 83px) rotate(225deg);
+    animation-delay: 0.62s;
+}
+.element:nth-child(7) {
+    transform: translate(87px, 75px) rotate(270deg);
+    animation-delay: 0.75s;
+}
+.element:nth-child(8) {
+    transform: translate(90px, 68px) rotate(305deg);
+    animation-delay: 0.87s;
+}
+
+
