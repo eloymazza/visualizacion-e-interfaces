@@ -6,8 +6,10 @@ let activeIndex = 0
 
 const prev = () => {
     images[activeIndex].classList.remove('active')
+    imageIndexes[activeIndex].classList.remove('active-image')
     activeIndex = activeIndex === 0 ? activeIndex = 2 : activeIndex - 1
     images[activeIndex].classList.add('active')
+    imageIndexes[activeIndex].classList.add('active-image')
 }
 
 const next = () => {

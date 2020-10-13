@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+@keyframes spinner {
+    25%{
+        transform: scale(1.5);
+    }
+    50% {
+        transform: scale(1);
+    }
+    66% {
+        transform: rotate(0deg);
+    }
+    82% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.container  {
+    position: absolute;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+}
+
+.spinner { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: spinner 1.5s infinite linear;
+}
+
+.hide {
+    display: none;
+}
