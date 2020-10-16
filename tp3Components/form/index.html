@@ -3,27 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <title>Document</title>
 </head>
 <body>
     <form class="comments-form">
         <div class="center-title">
-            <h2>Saluda a los actores</h2>
+            <h2>Deja Tu comentario</h2>
         </div>
         <div class="form-input">
-            <input type="text" name="name" id="name" placeholder="Ingrese su Nombre">
-        </div>
-        <div class="form-input">
-            <select name="actor-select" id="actor-select">
-                <option value="" selected disabled hidden>Que actor recibirá tu mensaje?</option>
-                <option value="0" >Robert Pattinson</option>
-                <option value="1">Zoë Kravitz</option>
-                <option value="2">Colin Farrell</option>
-                <option value="3">Paul Dano</option>
-                <option value="4">Andy Serkis</option>
-                <option value="5">Jeffrey Wright</option>
-            </select>
+            <input type="text" name="name" id="name-input" placeholder="Ingrese su Nombre">
         </div>
         <div class="form-input">
             <div class="bati-scores-container">
@@ -50,10 +40,10 @@
             </div>
         </div>
         <div class="form-input">
-            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <textarea name="" id="comments-area" cols="50" rows="10"></textarea>
         </div>
-        <div class="form-input">
-            <button type="button">Enviar </button>
+        <div class="form-input centered">
+            <button type="button" id="send-button">Enviar</button>
         </div>
     </form>
 </body>
