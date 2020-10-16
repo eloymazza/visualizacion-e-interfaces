@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+<body>
+    <form class="comments-form">
+        <div class="center-title">
+            <h2>Saluda a los actores</h2>
+        </div>
+        <div class="form-input">
+            <input type="text" name="name" id="name" placeholder="Ingrese su Nombre">
+        </div>
+        <div class="form-input">
+            <select name="actor-select" id="actor-select">
+                <option value="" selected disabled hidden>Que actor recibirá tu mensaje?</option>
+                <option value="0" >Robert Pattinson</option>
+                <option value="1">Zoë Kravitz</option>
+                <option value="2">Colin Farrell</option>
+                <option value="3">Paul Dano</option>
+                <option value="4">Andy Serkis</option>
+                <option value="5">Jeffrey Wright</option>
+            </select>
+        </div>
+        <div class="form-input">
+            <div class="bati-scores-container">
+                <div class="bati-score-label">
+                    <label for="">Bati-Puntos:</label>
+                </div>
+                <div class="bati-scores">
+                    <div class="bati-score">
+                        <img src="batman-logo.png" width="30px" height="20px" alt="">
+                    </div>
+                    <div class="bati-score" >
+                        <img class="vote-logo-inactive" src="batman-logo.png" alt="batman-logo">
+                    </div>
+                    <div class="bati-score">
+                        <img class="vote-logo-inactive" src="batman-logo.png" alt="batman-logo">
+                    </div>
+                    <div class="bati-score">
+                        <img class="vote-logo-inactive" src="batman-logo.png" alt="batman-logo">
+                    </div>
+                    <div class="bati-score">
+                        <img class="vote-logo-inactive" src="batman-logo.png"  alt="batman-logo">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-input">
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+        </div>
+        <div class="form-input">
+            <button type="button">Enviar </button>
+        </div>
+    </form>
+</body>
+<script src="main.js"></script>
+</html>
