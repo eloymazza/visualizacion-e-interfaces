@@ -23,7 +23,12 @@ batiScores.forEach( (batiScore, i) => {
 
 
 const sendComment = () => {
+    commentsForm.classList.remove("r")
+    commentSentContainer.classList.remove("r")
+    commentSentContainer.hidden = false
+    commentsForm.classList.add('transform-origin-top')
     sendButton.classList.add("hide-send-button")
+    batmanLogocontainer.style.zIndex = 0
     setTimeout(showCommentsLogo, 2000)
 }
 
