@@ -18,7 +18,7 @@
 
 .countdown-container { 
     position: absolute;
-    left: calc(50% - 415px);
+    left: calc(50% - 400px);
     top: calc(45% - 300px);
     width:  800px;
     height: 600px;
@@ -26,7 +26,7 @@
     color:  black;
     z-index: 2;
     opacity: 0;
-    transition: opacity 2s linear;
+    transition: opacity 1.5s linear;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -72,6 +72,27 @@
     margin-bottom: 20px;
 }
 
+.slider-label { 
+    color: white;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.slider-container { 
+    position: absolute;
+    left: calc(50% - 300px);
+    top: calc(45% - 200px);
+    width: 600px;
+    height: 400px;
+    border: 1px solid black;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 
 /* TRANSITIONS */
 
@@ -84,10 +105,29 @@
 }
 
 .slide-in {
-    left: calc(50vw - 470px);
+    left: calc(50vw - 450px);
     z-index: 3;
 }
 
+.appear-in-center {
+    z-index: 4;
+	animation:appear-in-center 0.7s cubic-bezier(0.470, 0.000, 0.745, 0.715) both;
+}
+
+
+ @keyframes appear-in-center {
+    0% {
+      transform: scale(2);
+      filter: blur(4px);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      filter: blur(0px);
+      opacity: 1;
+    }
+  }
+  
 
 
 

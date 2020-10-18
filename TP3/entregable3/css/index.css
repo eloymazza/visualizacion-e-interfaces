@@ -21,6 +21,11 @@ body {
     list-style-type: none;
 }
 
+.nav-bar li {
+    width: 100px;
+    text-align: center;
+}
+
 .nav-bar li:hover {
     cursor: pointer;
     color: #f4d534;

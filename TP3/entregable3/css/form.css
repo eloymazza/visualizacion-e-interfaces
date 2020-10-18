@@ -4,7 +4,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    width: calc(100vw - (100vw - 100%));
+    height: calc(100vh - 70px) ;
     overflow: hidden;
 }
 
@@ -16,7 +17,10 @@
     background-color: #f4d534;
     color: black;
     box-sizing: border-box;
-    padding: 0px 25px;
+    padding: 15px 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     transform-origin: center;
     transition: 2s all linear;
 }
@@ -33,6 +37,7 @@
 
 .center-title {
     text-align: center;
+    margin-bottom: 10px;
 }
 
 .form-input { 
@@ -84,9 +89,11 @@
 #name-input { 
     width: 100%;
     font-size: 16px;
+    padding-left: 5px;
 }
 
 #comments-area {
+    padding-left: 5px;
     font-size: 15px;
 }
 
@@ -111,7 +118,7 @@
     width: 200px;
     cursor: pointer;
     outline: none;
- 
+    margin-top: 5px;
 }
 
 @keyframes shadow {
@@ -157,6 +164,11 @@
     z-index: -1;
     font-size: x-large;
     transform: translateY(-50px);
+    margin-top: 5px;
+}
+
+.comment-sent-container p {
+    margin-bottom: 5px;
 }
 
 .rotate-in {
@@ -173,6 +185,8 @@
       opacity: 1;
     }
   }
+
+
   
   
 

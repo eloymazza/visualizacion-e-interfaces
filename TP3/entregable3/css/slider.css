@@ -1,9 +1,3 @@
-.slider-container { 
-    position: relative;
-    width: 800px;
-    height: 600px;
-    border: 1px solid black;
-}
 
 .slider-container:hover .slider-button {
     opacity: 1;
@@ -24,20 +18,21 @@
 #left-button {
     position: absolute;
     left: 10px;
-    background-image: url('css/images/leftArrow.png');
+    background-image: url('./images/slider/leftArrow.png');
     background-size: cover;
 }
 
 #right-button {
     position: absolute;
     right: 10px;
-    background-image: url('css/images/rightArrow.png');
+    background-image: url('./images/slider/rightArrow.png');
     background-size: cover;
 }
 
 .image-container { 
-    width: 800px;
-    height: 600px;
+    position: relative;
+    width: 600px;
+    height: 400px;
 }
 
 .image {
