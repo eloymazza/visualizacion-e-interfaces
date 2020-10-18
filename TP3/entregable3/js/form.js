@@ -20,8 +20,8 @@ const loadFormJS = () => {
     }
     
     const sendComment = () => {
-        commentsForm.classList.remove("r")
-        commentSentContainer.classList.remove("r")
+        commentsForm.classList.remove("rotate-in")
+        commentSentContainer.classList.remove("rotate-in")
         commentSentContainer.hidden = false
         commentsForm.classList.add('transform-origin-top')
         sendButton.classList.add("hide-send-button")

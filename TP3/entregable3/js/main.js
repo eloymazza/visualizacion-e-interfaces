@@ -3,10 +3,9 @@ const mainContainer = document.querySelector('.main-container')
 const baseURL = '../components/'
 const htmlFile = '.html'
 const pages = ['home', 'events', 'form']
-const waitTime = 3000
+const waitTime = 2800
 
-
-// Form Elements 
+// router
 
 let activePage = 0
 
@@ -15,7 +14,7 @@ const navigateTo = (page) => {
     navItems[page].classList.add('active-page')
     activePage = page
     showSpinner()
-    loadPage(page)
+    setTimeout(() => loadPage(page), waitTime)
 }
 
 const loadPage = (page) => {
@@ -29,11 +28,15 @@ const loadPage = (page) => {
 
 const loadJS = () => {
     switch (activePage) {
+        case 0:
+            loadHomeJS() 
+            break;
         case 1:
             loadEventsJS()
             break;
         case 2: 
             loadFormJS()
+            break;
         default:
             break;
     }
@@ -43,4 +46,4 @@ navItems.forEach((navItem, i) => {
     navItem.addEventListener("click", () => navigateTo(i))
 });
 
-showSpinner()
+navigateTo(0)
