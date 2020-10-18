@@ -1,0 +1,178 @@
+.comments-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.comments-form { 
+    width: 380px;
+    height: 350px;
+    border: 3px solid black;
+    border-radius: 10px;
+    background-color: #f4d534;
+    color: black;
+    box-sizing: border-box;
+    padding: 0px 25px;
+    transform-origin: center;
+    transition: 2s all linear;
+}
+
+.transform-origin-top{
+    transform-origin: top;
+}
+
+.bati-score { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-title {
+    text-align: center;
+}
+
+.form-input { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.bati-scores-container { 
+   width: 100%;
+   display: flex;
+   justify-content: space-evenly;
+}
+
+.bati-scores { 
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 70%;
+}
+
+.bati-score { 
+    cursor: pointer;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    border-radius: 100%;
+    box-shadow:  2px 1px 1px 1px;
+}
+
+.vote-logo-inactive {
+    width: 0px;
+    height: 0px;
+    transition: all .5s ease-in;
+}
+
+.vote-logo-active {
+    width: 30px;
+    height: 20px;
+    transform: rotate(360deg);
+}
+
+#name-input, #comments-area, #send-button {
+    box-shadow: 1px 1px 0px 1px;
+    border-radius: 2px;
+}
+
+#name-input { 
+    width: 100%;
+    font-size: 16px;
+}
+
+#comments-area {
+    font-size: 15px;
+}
+
+#name-input:focus , #comments-area:focus { 
+    animation: shadow 1s linear infinite;
+}
+
+.action-button {
+    cursor: pointer;
+    outline: none;
+    font-size: 20px;
+}
+
+#send-button { 
+    height: 32px;
+    width: 70px;
+    transition: all 2s linear;
+}
+
+#send-again-button {
+    height: 32px;
+    width: 200px;
+    cursor: pointer;
+    outline: none;
+ 
+}
+
+@keyframes shadow {
+    0% {
+        box-shadow:  0px 0px 3px 3px;
+    }
+    50% {
+        box-shadow:  2px 1px 5px 5px;
+    }
+    100% {
+        box-shadow:   0px 0px 3px 3px;
+    }
+}
+
+.hide-send-button {
+    transform: translateY(40px) scale(0);
+    opacity: 0;
+}
+
+.batman-logo-container {
+    opacity: 0;
+    transition: 2s all linear;
+    transform: translateY(-27px);
+    z-index: -1;
+}
+
+.close-comments-form {
+    transform-origin:  top;
+    transform: scaleY(0);
+}
+
+.move-up-logo {
+    transform: translateY(-375px);
+}
+
+.comment-sent-container {
+    position: absolute;
+    width: 350px;
+    height: 250px;
+    background-color: black;
+    text-align: center;
+    color: white;
+    z-index: -1;
+    font-size: x-large;
+    transform: translateY(-50px);
+}
+
+.r {
+    animation: swirl-in-fwd 0.6s ease-out both;
+}
+
+ @keyframes swirl-in-fwd {
+    0% {
+      transform: rotate(-540deg) scale(0);
+      opacity: 0;
+    }
+    100% {
+      transform: rotate(0) scale(1);
+      opacity: 1;
+    }
+  }
+  
+  
+

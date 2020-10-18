@@ -1,0 +1,31 @@
+* { 
+    padding: 0;
+    margin: 0;
+    font-family: 'Bangers', cursive;
+}
+
+body { 
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+
+}
+
+.nav-bar {
+    display: flex;
+    font-size: 25px;
+    justify-content: space-evenly;
+    padding: 10px;
+    color: white;
+    height: 50px;
+    list-style-type: none;
+}
+
+.nav-bar li:hover {
+    cursor: pointer;
+    color: #f4d534;
+}
+
+.active-page {
+    color: #f4d534;
+}

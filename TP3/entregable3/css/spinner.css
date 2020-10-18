@@ -1,0 +1,44 @@
+.spinner-container  {
+    position: absolute;
+    top: 50px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width:  100vw;
+    height: calc(100vh - 50px);
+    background-color: black;
+}
+
+.spinner { 
+    animation: spinner 1.5s infinite linear;
+}
+
+.hide-spinner {
+    display: none;
+}
+
+@keyframes spinner {
+    25%{
+        transform: scale(1.5);
+    }
+    50% {
+        transform: scale(1);
+    }
+    66% {
+        transform: rotate(0deg);
+    }
+    82% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-page {
+    color: white;
+    margin-top: 20px;
+    font-size: 20px;
+}
