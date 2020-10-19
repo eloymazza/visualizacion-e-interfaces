@@ -1,0 +1,24 @@
+.layer {
+    position: absolute;
+}
+
+.layer-4 {
+    bottom: 100px;
+    z-index: 4;
+    animation: move-backwards 15s linear infinite;
+}
+
+.layer-5 {
+    bottom: 0;
+    z-index: 5;
+    animation: move-backwards 5s linear infinite;
+}
+
+@keyframes move-backwards {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: -1200px;
+    }
+}
