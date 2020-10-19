@@ -4,14 +4,15 @@
 
 .layer-1 {
     bottom: 150px;
-    z-index: 2;
-    animation: move-backwards 200s linear infinite;
+    z-index: 1;
+    animation: move-backwards 2000s linear infinite;
 }
 
 .layer-2 {
-    bottom: 150px;
+    top: 5px;
+    right: 10px;
     z-index: 2;
-    animation: move-backwards 200s linear infinite;
+    animation: move-backwards-moon 1000s linear infinite;
 }
 
 .layer-3 {
@@ -32,12 +33,23 @@
     animation: move-backwards 5s linear infinite;
 }
 
+
+
 @keyframes move-backwards {
     0% {
         left: 0;
     }
     100% {
         left: -1200px;
+    }
+}
+
+@keyframes move-backwards-moon {
+    0% {
+        right: 10px;
+    }
+    100% {
+        right: 1200px;
     }
 }
 
