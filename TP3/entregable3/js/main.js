@@ -1,6 +1,6 @@
 const navItems = document.querySelectorAll('.nav-item')
 const mainContainer = document.querySelector('.main-container')
-const baseURL = '../components/'
+const baseURL = '../engregable3/components/'
 const htmlFile = '.html'
 const pages = ['home', 'events', 'form']
 const waitTime = 2800
