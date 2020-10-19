@@ -2,34 +2,44 @@
     position: absolute;
 }
 
-.layer-1 {
+.sky-layer {
     bottom: 150px;
     z-index: 1;
     animation: move-backwards 2000s linear infinite;
 }
 
-.layer-2 {
+.moon-layer {
     top: 5px;
     right: 10px;
     z-index: 2;
     animation: move-backwards-moon 1000s linear infinite;
 }
 
-.layer-3 {
+.signal-layer {
+   
+}
+
+.back-building-layer {
     bottom: 100px;
-    z-index: 3;
+    z-index: 4;
     animation: move-backwards 40s linear infinite;
 }
 
-.layer-4 {
+.logo-layer{
+    z-index: 5;
+    bottom: 200px;
+    left: calc(50% - 300px);
+}
+
+.front-building-layer {
     bottom: 100px;
-    z-index: 4;
+    z-index: 6;
     animation: move-backwards 15s linear infinite;
 }
 
-.layer-5 {
+.street-layer {
     bottom: 0;
-    z-index: 5;
+    z-index: 7;
     animation: move-backwards 5s linear infinite;
 }
 
