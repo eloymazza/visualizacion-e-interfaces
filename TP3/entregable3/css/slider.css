@@ -54,7 +54,7 @@
     height: 30px;
     background-color: transparent;
     z-index: 10;
-    bottom: 20px;
+    bottom: 10px;
     left: calc(50% - 100px);
     display: flex;
     justify-content: center;
