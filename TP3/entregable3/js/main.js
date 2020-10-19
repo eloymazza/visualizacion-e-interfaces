@@ -1,6 +1,6 @@
 const navItems = document.querySelectorAll('.nav-item')
 const mainContainer = document.querySelector('.main-container')
-const baseURL = '../entregable3/components/'
+const baseURL = 'components/'
 const htmlFile = '.html'
 const pages = ['home', 'events', 'form']
 const waitTime = 2800
