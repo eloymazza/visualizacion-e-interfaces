@@ -2,6 +2,24 @@
     position: absolute;
 }
 
+.layer-1 {
+    bottom: 150px;
+    z-index: 2;
+    animation: move-backwards 200s linear infinite;
+}
+
+.layer-2 {
+    bottom: 150px;
+    z-index: 2;
+    animation: move-backwards 200s linear infinite;
+}
+
+.layer-3 {
+    bottom: 100px;
+    z-index: 3;
+    animation: move-backwards 40s linear infinite;
+}
+
 .layer-4 {
     bottom: 100px;
     z-index: 4;
@@ -22,3 +40,4 @@
         left: -1200px;
     }
 }
+
