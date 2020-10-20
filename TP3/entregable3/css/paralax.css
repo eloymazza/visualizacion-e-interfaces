@@ -15,9 +15,6 @@
     animation: move-backwards-moon 1000s linear infinite;
 }
 
-.signal-layer {
-   
-}
 
 .back-building-layer {
     bottom: 100px;
@@ -27,7 +24,7 @@
 
 .logo-layer{
     z-index: 5;
-    bottom: 200px;
+    bottom: 180px;
     left: calc(50% - 300px);
 }
 

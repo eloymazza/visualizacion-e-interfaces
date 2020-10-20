@@ -5,13 +5,14 @@ const loadHomeJS = () => {
     const countdownContainer = document.querySelector(".countdown-container") 
     const castGridContainer = document.querySelector(".cast-grid-container") 
     const sliderContainer = document.querySelector(".slider-container") 
+    const scrolldownContainer = document.querySelector(".scroll-down-container")
 
     document.addEventListener("wheel", (e) => {
         if(e.deltaY > 0) {
             scrollLevel += 1
         }
         else {
-            console.log("arriba")
+
         }
         transitionManager()
     })
@@ -20,10 +21,12 @@ const loadHomeJS = () => {
         if(scrollLevel > 0 && scrollLevel < 11) assignParalaxTransition()
         else if (scrollLevel >= 11 && scrollLevel < 20) assignCoundownEntrance() 
         else if (scrollLevel >= 20 && scrollLevel < 23) assignCoundownExit()
-        else if(scrollLevel > 24 && scrollLevel < 32) assignGridEntrance() 
+        else if(scrollLevel > 24 && scrollLevel < 30) assignGridEntrance() 
         else if(scrollLevel >= 33 && scrollLevel < 42) assignGridExit() 
-        else if(scrollLevel >= 42) assignSliderEntrance() 
-
+        else if(scrollLevel >= 42) {
+            assignSliderEntrance() 
+            hideScroll()
+        }
     }
 
     const assignParalaxTransition = () => [
@@ -48,6 +51,10 @@ const loadHomeJS = () => {
 
     const assignSliderEntrance = () => {
         sliderContainer.classList.add('appear-in-center')
+    }
+
+    const hideScroll = () => {
+        scrolldownContainer.classList.add('fade-out')
     }
 
     
