@@ -1,44 +1,86 @@
 const loadHomeJS = () => {
 
     let scrollLevel = 0
+    let scrollDown = true
     const paralaxContainer = document.querySelector(".paralax-container") 
     const countdownContainer = document.querySelector(".countdown-container") 
     const castGridContainer = document.querySelector(".cast-grid-container") 
     const sliderContainer = document.querySelector(".slider-container") 
     const scrolldownContainer = document.querySelector(".scroll-down-container")
+    const scrollupContainer = document.querySelector(".scroll-up-container")
 
     document.addEventListener("wheel", (e) => {
         if(e.deltaY > 0) {
-            scrollLevel += 1
+            increaseScrollLevel()
         }
         else {
-
+            decreaseScrollLevel()
         }
+        console.log(scrollLevel)
         transitionManager()
     })
 
-    const transitionManager = () => {
-        if(scrollLevel > 0 && scrollLevel < 11) assignParalaxTransition()
-        else if (scrollLevel >= 11 && scrollLevel < 20) assignCoundownEntrance() 
-        else if (scrollLevel >= 20 && scrollLevel < 23) assignCoundownExit()
-        else if(scrollLevel > 24 && scrollLevel < 30) assignGridEntrance() 
-        else if(scrollLevel >= 33 && scrollLevel < 42) assignGridExit() 
-        else if(scrollLevel >= 42) {
-            assignSliderEntrance() 
-            hideScroll()
-        }
+    const increaseScrollLevel = () => {
+        showScroll(scrollupContainer)
+        scrollLevel += 1
+        scrollDown = true
+        if(scrollLevel >= 55) {
+            scrollLevel = 55
+        } 
     }
 
-    const assignParalaxTransition = () => [
+    const decreaseScrollLevel = () => {
+        console.log("entro")
+        showScroll(scrolldownContainer)
+        scrollLevel -= 1
+        scrollDown = false
+        if(scrollLevel < 0) {
+            scrollLevel = 0
+            hideScroll(scrollupContainer)
+        } 
+    }
+
+    const transitionManager = () => {
+        if(scrollLevel > 0 && scrollLevel < 11) assignParalaxTransition()
+        else if (scrollLevel >= 14 && scrollLevel <= 24) assignCountdownTransition() 
+        else if(scrollLevel >= 28 && scrollLevel <= 38) assignGridTransition() 
+        else if(scrollLevel >= 42) assignSliderTransition() 
+    }
+
+    const assignParalaxTransition = () => {
         paralaxContainer.style.opacity = 1 - scrollLevel/10 
-    ]
+    }
+
+    const assignCountdownTransition = () => {
+        if(scrollLevel === 14 && !scrollDown) {
+            assignCountdownExit()
+        }
+        else if (scrollLevel === 24 && scrollDown){
+            assignCountdownExit()
+        }
+        else {
+            assignCountdownEntrance()
+        }
+    }
     
-    const assignCoundownEntrance = () => {
+    const assignCountdownEntrance = () => {
         countdownContainer.classList.add('fade-in')
     }
 
-    const assignCoundownExit = () => {
+    const assignCountdownExit = () => {
         countdownContainer.classList.remove('fade-in')
+    }
+
+    const assignGridTransition = () => {
+        if(scrollLevel === 28 && !scrollDown) {
+            assignGridExit()
+        }
+        else if (scrollLevel === 38 && scrollDown){
+            assignGridExit()
+        }
+        else {
+            assignGridEntrance()
+        }
     }
 
     const assignGridEntrance = () => {
@@ -49,12 +91,38 @@ const loadHomeJS = () => {
         castGridContainer.classList.remove('slide-in')
     }
 
+    const assignSliderTransition = () => {
+        if(scrollLevel === 42 && !scrollDown) {
+            console.log("entro en slier exit")
+            assignSliderExit()
+        }
+        else {
+            console.log("entro en slier in")
+            assignSliderEntrance()
+            hideScroll(scrolldownContainer)
+        }
+    }
+
     const assignSliderEntrance = () => {
+        sliderContainer.classList.remove('dissapear-in-center')
         sliderContainer.classList.add('appear-in-center')
     }
 
-    const hideScroll = () => {
-        scrolldownContainer.classList.add('fade-out')
+    const assignSliderExit = () => {
+        sliderContainer.classList.remove('appear-in-center')
+        sliderContainer.classList.add('dissapear-in-center')
+    }
+
+
+    const hideScroll = (scrollContainer) => {
+        scrollContainer.classList.remove('fade-in')
+        scrollContainer.classList.add('fade-out')
+
+    }
+
+    const showScroll = (scrollContainer) => {
+        scrollContainer.classList.add('fade-in')
+        scrollContainer.classList.remove('fade-out')
     }
 
     
