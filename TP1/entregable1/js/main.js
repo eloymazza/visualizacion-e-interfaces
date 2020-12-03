@@ -7,7 +7,7 @@ const defaultH = canvas.height
 let image
 
 ctx.font = "40px Arial";
-ctx.fillText("Carga una imagen para comenzar", 300, defaultH/2);
+ctx.fillText("Carga una imagen para comenzar", 200, defaultH/2);
 
 // Utils
 
@@ -368,7 +368,7 @@ loadImageInput.onchange = e => {
     }
 }
 
-const getScales = (image) => {
+const getScales = (image) => {  
     debugger
     let w = image.width
     let h = image.height
@@ -378,7 +378,7 @@ const getScales = (image) => {
         canvas.height = h
         return [w, h]
     }
-    canvas.width = 1200
+    canvas.width = 1000
     canvas.height = 600 
     // case image width and height does not fit canvas
     if(w > canvas.width && h > canvas.height) {
