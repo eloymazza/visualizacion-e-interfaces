@@ -213,7 +213,7 @@ const isBorder = (imageData, x, y) => {
 }
 
 const isDifferent = (leftColor, centerColor) => {
-    return Math.abs(leftColor - centerColor) > 50
+    return Math.abs(leftColor - centerColor) > 30
 }
 
 // Negative
