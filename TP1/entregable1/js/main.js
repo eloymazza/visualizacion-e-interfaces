@@ -317,7 +317,7 @@ const borderDetection = () => {
     for (let x = 1; x < image.width - 1; x++) {
         for (let y = 1; y < image.height - 1; y++) { 
             if(isBorder(imageData, x, y))
-                setPixel(newImage, x, y, 0, 0, 0)
+                setPixel(newImage, x, y, 255, 255, 255)
         }
     }
     ctx.putImageData(newImage, 0, 0)
